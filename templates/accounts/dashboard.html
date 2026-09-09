@@ -1,0 +1,605 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Management - Dashboard</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f4f7f5;
+            color: #17251d;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #10251a;
+            color: white;
+            padding: 28px 18px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: 800;
+            padding: 0 14px 30px;
+        }
+
+        .brand span {
+            color: #f59e0b;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #d7e3db;
+            padding: 13px 14px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: #166534;
+            color: white;
+        }
+
+        .main {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 35px;
+        }
+
+        .top {
+            margin-bottom: 28px;
+        }
+
+        .top h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        .top p {
+            color: #68756d;
+            font-size: 14px;
+        }
+
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .week-header h2 {
+            font-size: 20px;
+        }
+
+        .week-header span {
+            color: #68756d;
+            font-size: 13px;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .day-card {
+            background: white;
+            border: 1px solid #e0e7e2;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 14px rgba(16, 37, 26, 0.05);
+            min-height: 310px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .day-title {
+            border-bottom: 1px solid #edf1ee;
+            padding-bottom: 14px;
+            margin-bottom: 16px;
+        }
+
+        .day-title h3 {
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .day-title p {
+            margin-top: 5px;
+            color: #7b867f;
+            font-size: 12px;
+        }
+
+        .section {
+            margin-bottom: 17px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            font-weight: 800;
+            color: #718078;
+            margin-bottom: 8px;
+        }
+
+        .items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .food {
+            background: #e8f5ec;
+            color: #166534;
+            border-radius: 7px;
+            padding: 6px 9px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .side {
+            background: #fff4df;
+            color: #a16207;
+            border-radius: 7px;
+            padding: 6px 9px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .empty {
+            color: #9aa49e;
+            font-size: 12px;
+        }
+
+        .day-footer {
+            margin-top: auto;
+            padding-top: 15px;
+        }
+
+        .order-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            background: #166534;
+            color: white;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .order-btn:hover {
+            background: #14532d;
+        }
+
+        .ordered {
+            width: 100%;
+            text-align: center;
+            background: #eef2ef;
+            color: #536158;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .no-menu {
+            color: #9aa49e;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .orders-section {
+            margin-top: 35px;
+        }
+
+        .orders-card {
+            background: white;
+            border: 1px solid #e0e7e2;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(16, 37, 26, 0.05);
+        }
+
+        .orders-card-header {
+            padding: 20px;
+            border-bottom: 1px solid #edf1ee;
+        }
+
+        .orders-card-header h2 {
+            font-size: 19px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f7f9f7;
+            color: #68756d;
+            text-align: left;
+            padding: 13px 18px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 15px 18px;
+            border-top: 1px solid #edf1ee;
+            font-size: 13px;
+            color: #26352d;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 8px;
+            border-radius: 6px;
+            background: #e8f5ec;
+            color: #166534;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .cancel-btn {
+            border: none;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 7px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: #e8f5ec;
+            color: #166534;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1200px) {
+            .days {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 22px;
+            }
+
+            .days {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            Food<span>Management</span>
+        </div>
+
+        <nav class="nav">
+            <a href="{% url 'dashboard' %}" class="active">
+                Dashboard
+            </a>
+
+            <a href="{% url 'my_orders' %}">
+                My Orders
+            </a>
+
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+        </nav>
+    </aside>
+
+
+    <main class="main">
+
+        <div class="top">
+            <h1>Welcome, {{ request.user.username }}</h1>
+            <p>Plan your meals for the current working week.</p>
+        </div>
+
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+        <div class="week-header">
+            <h2>Weekly Meals</h2>
+
+            <span>
+                {{ monday|date:"d M Y" }} - {{ friday|date:"d M Y" }}
+            </span>
+        </div>
+
+
+        <div class="days">
+
+            {% for day in days %}
+
+                <div class="day-card">
+
+                    <div class="day-title">
+                        <h3>{{ day.name }}</h3>
+
+                        <p>
+                            {{ day.date|date:"d M Y" }}
+                        </p>
+                    </div>
+
+
+                    {% if day.menu %}
+
+                        <div class="section">
+
+                            <div class="section-title">
+                                Food
+                            </div>
+
+                            <div class="items">
+
+                                {% for food in day.menu.foods.all %}
+
+                                    <span class="food">
+                                        {{ food.name }}
+                                    </span>
+
+                                {% empty %}
+
+                                    <span class="empty">
+                                        No food available
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="section">
+
+                            <div class="section-title">
+                                Sides
+                            </div>
+
+                            <div class="items">
+
+                                {% for side in day.menu.vegetables.all %}
+
+                                    <span class="side">
+                                        {{ side.name }}
+                                    </span>
+
+                                {% empty %}
+
+                                    <span class="empty">
+                                        No sides available
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="day-footer">
+
+                            {% if day.already_ordered %}
+
+                                <div class="ordered">
+                                    Already Ordered
+                                </div>
+
+                            {% else %}
+
+                                <a
+                                    href="{% url 'create_order' day.number %}"
+                                    class="order-btn"
+                                >
+                                    Order Meal
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="no-menu">
+                            No menu has been configured for this day.
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <section class="orders-section">
+
+            <div class="week-header">
+                <h2>My Orders This Week</h2>
+            </div>
+
+
+            <div class="orders-card">
+
+                <div class="orders-card-header">
+                    <h2>Current Week Orders</h2>
+                </div>
+
+
+                {% if week_orders %}
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Food</th>
+                                <th>Side</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for order in week_orders %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ order.order_date|date:"D, d M Y" }}
+                                    </td>
+
+                                    <td>
+                                        {{ order.food.name }}
+                                    </td>
+
+                                    <td>
+                                        {% if order.vegetable %}
+                                            {{ order.vegetable.name }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        {{ order.quantity }}
+                                    </td>
+
+                                    <td>
+                                        <span class="status">
+                                            {{ order.get_status_display }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+
+                                        {% if order.status == "pending" %}
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'cancel_order' order.id %}"
+                                            >
+
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="cancel-btn"
+                                                >
+                                                    Cancel
+                                                </button>
+
+                                            </form>
+
+                                        {% else %}
+
+                                            -
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                {% else %}
+
+                    <div style="padding: 25px; color: #7b867f; font-size: 13px;">
+                        You have not placed any orders for this week.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

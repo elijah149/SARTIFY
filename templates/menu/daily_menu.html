@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daily Meals</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: #f5f7f6;
+            color: #17231c;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 235px;
+            background: #10251a;
+            color: white;
+            padding: 24px 16px;
+            position: fixed;
+            inset: 0 auto 0 0;
+        }
+
+        .logo {
+            font-size: 19px;
+            font-weight: 700;
+            padding: 0 12px 32px;
+        }
+
+        .nav-title {
+            color: #82938a;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin: 20px 12px 8px;
+        }
+
+        .nav a {
+            display: block;
+            color: #dce8e0;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: #166534;
+            color: white;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 235px;
+            width: calc(100% - 235px);
+            padding: 32px;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 7px;
+            font-size: 27px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #718078;
+            font-size: 13px;
+        }
+
+        /* MESSAGES */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            background: white;
+            border-left: 4px solid #166534;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            border-top: 1px solid #e1e9e4;
+            border-right: 1px solid #e1e9e4;
+            border-bottom: 1px solid #e1e9e4;
+        }
+
+        /* DAYS */
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .day-card {
+            background: white;
+            border: 1px solid #e0e8e3;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(16, 37, 26, .05);
+        }
+
+        .day-header {
+            background: #10251a;
+            color: white;
+            padding: 17px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .day-header h2 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .day-label {
+            background: #166534;
+            padding: 5px 9px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .day-body {
+            padding: 20px;
+        }
+
+        .meal-section {
+            margin-bottom: 24px;
+        }
+
+        .meal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #59675f;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            margin-bottom: 10px;
+        }
+
+        /* ITEMS */
+
+        .items {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f3f7f4;
+            border: 1px solid #dce7e0;
+            border-radius: 8px;
+            padding: 9px 11px;
+        }
+
+        .item-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #285039;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            background: #166534;
+            border-radius: 50%;
+        }
+
+        .delete-btn {
+            border: none;
+            background: #fff1ed;
+            color: #c2410c;
+            border-radius: 6px;
+            padding: 6px 9px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #ffddd2;
+        }
+
+        /* ADD FORM */
+
+        .add-form {
+            display: flex;
+            gap: 7px;
+            margin-top: 10px;
+        }
+
+        .add-form input {
+            flex: 1;
+            min-width: 0;
+            border: 1px solid #d5ded8;
+            border-radius: 7px;
+            padding: 9px 10px;
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+            outline: none;
+        }
+
+        .add-form input:focus {
+            border-color: #166534;
+        }
+
+        .add-btn {
+            border: none;
+            background: #166534;
+            color: white;
+            border-radius: 7px;
+            padding: 9px 12px;
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .add-btn:hover {
+            background: #14532d;
+        }
+
+        .empty {
+            padding: 10px 12px;
+            border: 1px dashed #d5ded8;
+            border-radius: 8px;
+            color: #89948d;
+            font-size: 11px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+                padding: 22px;
+            }
+
+            .days {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Food Management
+        </div>
+
+        <div class="nav">
+
+            <div class="nav-title">
+                Main
+            </div>
+
+            <a href="{% url 'admin_dashboard' %}">
+                Dashboard
+            </a>
+
+            <div class="nav-title">
+                Management
+            </div>
+
+            <a href="{% url 'users_list' %}">
+                Users
+            </a>
+
+            <a href="{% url 'daily_menu' %}" class="active">
+                Daily Meals
+            </a>
+
+            <a href="{% url 'admin_orders' %}">
+                Orders
+            </a>
+
+            <div class="nav-title">
+                Account
+            </div>
+
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="header">
+
+            <h1>
+                Daily Meals
+            </h1>
+
+            <p>
+                Add or remove foods and sides for each day.
+            </p>
+
+        </div>
+
+
+        {% if messages %}
+
+        <div class="messages">
+
+            {% for message in messages %}
+
+                <div class="message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+
+        <div class="days">
+
+            {% for day in days %}
+
+            <div class="day-card">
+
+                <div class="day-header">
+
+                    <h2>
+                        {{ day.name }}
+                    </h2>
+
+                    <span class="day-label">
+                        DAY {{ day.number|add:"1" }}
+                    </span>
+
+                </div>
+
+
+                <div class="day-body">
+
+                    <!-- FOODS -->
+
+                    <div class="meal-section">
+
+                        <div class="section-title">
+                            Foods
+                        </div>
+
+                        <div class="items">
+
+                            {% if day.menu %}
+
+                                {% for food in day.menu.foods.all %}
+
+                                <div class="item">
+
+                                    <div class="item-name">
+                                        <span class="dot"></span>
+                                        {{ food.name }}
+                                    </div>
+
+                                    <form
+                                        method="post"
+                                        action="{% url 'manage_daily_meal' day.number %}"
+                                    >
+
+                                        {% csrf_token %}
+
+                                        <input
+                                            type="hidden"
+                                            name="action"
+                                            value="delete_food"
+                                        >
+
+                                        <input
+                                            type="hidden"
+                                            name="food_id"
+                                            value="{{ food.id }}"
+                                        >
+
+                                        <button
+                                            type="submit"
+                                            class="delete-btn"
+                                        >
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                                {% empty %}
+
+                                <div class="empty">
+                                    No food added.
+                                </div>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <div class="empty">
+                                    No food added.
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <form
+                            method="post"
+                            action="{% url 'manage_daily_meal' day.number %}"
+                            class="add-form"
+                        >
+
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="add_food"
+                            >
+
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Enter food name"
+                                required
+                            >
+
+                            <button
+                                type="submit"
+                                class="add-btn"
+                            >
+                                + Add Food
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- SIDES -->
+
+                    <div class="meal-section">
+
+                        <div class="section-title">
+                            Sides
+                        </div>
+
+                        <div class="items">
+
+                            {% if day.menu %}
+
+                                {% for side in day.menu.vegetables.all %}
+
+                                <div class="item">
+
+                                    <div class="item-name">
+                                        <span class="dot"></span>
+                                        {{ side.name }}
+                                    </div>
+
+                                    <form
+                                        method="post"
+                                        action="{% url 'manage_daily_meal' day.number %}"
+                                    >
+
+                                        {% csrf_token %}
+
+                                        <input
+                                            type="hidden"
+                                            name="action"
+                                            value="delete_side"
+                                        >
+
+                                        <input
+                                            type="hidden"
+                                            name="side_id"
+                                            value="{{ side.id }}"
+                                        >
+
+                                        <button
+                                            type="submit"
+                                            class="delete-btn"
+                                        >
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                                {% empty %}
+
+                                <div class="empty">
+                                    No side added.
+                                </div>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <div class="empty">
+                                    No side added.
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <form
+                            method="post"
+                            action="{% url 'manage_daily_meal' day.number %}"
+                            class="add-form"
+                        >
+
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="action"
+                                value="add_side"
+                            >
+
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Enter side name"
+                                required
+                            >
+
+                            <button
+                                type="submit"
+                                class="add-btn"
+                            >
+                                + Add Side
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, sans-serif;
+            background: #f6f8f7;
+            color: #17231c;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: #166534;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border: 1px solid #e2e9e4;
+            border-radius: 14px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .subtitle {
+            color: #718078;
+            font-size: 13px;
+            margin: 8px 0 28px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            border: 1px solid #d5ded8;
+            border-radius: 8px;
+            padding: 12px 13px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #166534;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .help {
+            color: #7b8780;
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        .error {
+            color: #b91c1c;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        button,
+        .cancel {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 18px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background: #166534;
+            color: white;
+        }
+
+        .cancel {
+            background: #eef2ef;
+            color: #344139;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{% url 'users_list' %}" class="back">
+        Back to Users
+    </a>
+
+    <div class="card">
+
+        <h1>{{ title }}</h1>
+
+        <div class="subtitle">
+            Create or update a system user.
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <div class="field">
+
+                    {% if field.name == "is_active" %}
+
+                        <label class="checkbox">
+                            {{ field }}
+                            {{ field.label }}
+                        </label>
+
+                    {% else %}
+
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                    {% endif %}
+
+                    {% if field.help_text %}
+                        <div class="help">
+                            {{ field.help_text }}
+                        </div>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+            <div class="actions">
+
+                <button type="submit">
+                    Save User
+                </button>
+
+                <a
+                    href="{% url 'users_list' %}"
+                    class="cancel"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

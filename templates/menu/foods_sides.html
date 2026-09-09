@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Foods & Sides</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: #f6f8f7;
+            color: #17231c;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #10251a;
+            color: white;
+            padding: 28px 18px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: 700;
+            margin-bottom: 38px;
+            padding: 0 12px;
+        }
+
+        .section-title {
+            color: #91a79a;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 25px 12px 9px;
+        }
+
+        .nav-link {
+            display: block;
+            text-decoration: none;
+            color: #d7e2db;
+            padding: 11px 12px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #166534;
+            color: white;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 34px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .title p {
+            margin: 7px 0 0;
+            color: #718078;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #166534;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #14532d;
+        }
+
+        .btn-orange {
+            background: #f97316;
+            color: white;
+        }
+
+        .btn-orange:hover {
+            background: #ea580c;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 22px;
+            border: 1px solid #e4eae6;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: 1px solid #d7e0da;
+            border-radius: 8px;
+            padding: 11px 13px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #166534;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e4eae6;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #edf1ee;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .count {
+            background: #edf7f0;
+            color: #166534;
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 16px 20px;
+            border-bottom: 1px solid #edf1ee;
+        }
+
+        .item:last-child {
+            border-bottom: 0;
+        }
+
+        .item-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .item-description {
+            margin-top: 5px;
+            color: #7b8780;
+            font-size: 12px;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 7px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .inactive {
+            background: #f1f5f2;
+            color: #68756d;
+        }
+
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .small-btn {
+            text-decoration: none;
+            border: 1px solid #dce4df;
+            background: white;
+            color: #33423a;
+            padding: 7px 10px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .small-btn:hover {
+            background: #f4f7f5;
+        }
+
+        .delete-btn {
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+
+        .delete-btn:hover {
+            background: #fef2f2;
+        }
+
+        .empty {
+            padding: 35px 20px;
+            text-align: center;
+            color: #87928c;
+            font-size: 13px;
+        }
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            background: white;
+            border-left: 4px solid #166534;
+            padding: 13px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+                padding: 25px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .actions {
+                width: 100%;
+            }
+
+            .actions .btn {
+                flex: 1;
+                text-align: center;
+            }
+
+            .item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .item-actions {
+                width: 100%;
+            }
+
+            .item-actions .small-btn {
+                flex: 1;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="brand">
+        Food Management
+    </div>
+
+    <div class="section-title">Overview</div>
+
+    <a
+        href="{% url 'admin_dashboard' %}"
+        class="nav-link"
+    >
+        Dashboard
+    </a>
+
+    <a
+        href="{% url 'admin_orders' %}"
+        class="nav-link"
+    >
+        Weekly Orders
+    </a>
+
+    <div class="section-title">Management</div>
+
+    <a
+        href="{% url 'foods_sides' %}"
+        class="nav-link active"
+    >
+        Foods & Sides
+    </a>
+
+    <a
+        href="/admin/auth/user/"
+        class="nav-link"
+    >
+        Users
+    </a>
+
+    <a
+        href="/admin/menu/dailymenu/"
+        class="nav-link"
+    >
+        Daily Menu
+    </a>
+
+    <div class="section-title">System</div>
+
+    <a
+        href="/admin/"
+        class="nav-link"
+    >
+        Food Management Admin
+    </a>
+
+    <a
+        href="{% url 'logout' %}"
+        class="nav-link"
+    >
+        Logout
+    </a>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div class="title">
+            <h1>Foods & Sides</h1>
+            <p>
+                Manage all available foods and sides from one place.
+            </p>
+        </div>
+
+        <div class="actions">
+            <a
+                href="{% url 'add_food' %}"
+                class="btn btn-primary"
+            >
+                Add Food
+            </a>
+
+            <a
+                href="{% url 'add_side' %}"
+                class="btn btn-orange"
+            >
+                Add Side
+            </a>
+        </div>
+
+    </div>
+
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    <div class="search-box">
+
+        <form
+            method="GET"
+            class="search-form"
+        >
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                class="search-input"
+                placeholder="Search food or side..."
+            >
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Search
+            </button>
+
+            {% if search %}
+                <a
+                    href="{% url 'foods_sides' %}"
+                    class="btn small-btn"
+                >
+                    Clear
+                </a>
+            {% endif %}
+
+        </form>
+
+    </div>
+
+
+    <div class="grid">
+
+        <section class="card">
+
+            <div class="card-header">
+                <h2>Foods</h2>
+
+                <span class="count">
+                    {{ foods|length }}
+                </span>
+            </div>
+
+            {% for food in foods %}
+
+                <div class="item">
+
+                    <div>
+
+                        <div class="item-name">
+                            {{ food.name }}
+                        </div>
+
+                        {% if food.description %}
+                            <div class="item-description">
+                                {{ food.description }}
+                            </div>
+                        {% endif %}
+
+                        {% if food.is_active %}
+                            <span class="status active">
+                                Active
+                            </span>
+                        {% else %}
+                            <span class="status inactive">
+                                Inactive
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <a
+                            href="{% url 'edit_food' food.id %}"
+                            class="small-btn"
+                        >
+                            Edit
+                        </a>
+
+                        <form
+                            method="POST"
+                            action="{% url 'delete_food' food.id %}"
+                            onsubmit="return confirm('Are you sure you want to delete this food?');"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="small-btn delete-btn"
+                            >
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty">
+                    No foods found.
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+
+        <section class="card">
+
+            <div class="card-header">
+                <h2>Sides</h2>
+
+                <span class="count">
+                    {{ vegetables|length }}
+                </span>
+            </div>
+
+            {% for vegetable in vegetables %}
+
+                <div class="item">
+
+                    <div>
+
+                        <div class="item-name">
+                            {{ vegetable.name }}
+                        </div>
+
+                        {% if vegetable.is_active %}
+                            <span class="status active">
+                                Active
+                            </span>
+                        {% else %}
+                            <span class="status inactive">
+                                Inactive
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <a
+                            href="{% url 'edit_side' vegetable.id %}"
+                            class="small-btn"
+                        >
+                            Edit
+                        </a>
+
+                        <form
+                            method="POST"
+                            action="{% url 'delete_side' vegetable.id %}"
+                            onsubmit="return confirm('Are you sure you want to delete this side?');"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="small-btn delete-btn"
+                            >
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty">
+                    No sides found.
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+    </div>
+
+</main>
+
+</body>
+</html>

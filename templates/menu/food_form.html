@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: #f6f8f7;
+            color: #17231c;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .back {
+            display: inline-block;
+            color: #166534;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e3e9e5;
+            border-radius: 14px;
+            padding: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .subtitle {
+            color: #748078;
+            font-size: 13px;
+            margin: 8px 0 28px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d5ded8;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #166534;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13px;
+        }
+
+        .checkbox input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .error {
+            color: #b91c1c;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            padding: 11px 18px;
+            border: 0;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .save {
+            background: #166534;
+            color: white;
+        }
+
+        .cancel {
+            background: #eef2ef;
+            color: #344139;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a
+        href="{% url 'foods_sides' %}"
+        class="back"
+    >
+        Back to Foods & Sides
+    </a>
+
+    <div class="card">
+
+        <h1>{{ title }}</h1>
+
+        <p class="subtitle">
+            Add or update a {{ item_type|lower }}.
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <div class="field">
+
+                    {% if field.name == "is_active" %}
+
+                        <label class="checkbox">
+                            {{ field }}
+                            {{ field.label }}
+                        </label>
+
+                    {% else %}
+
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+            <div class="actions">
+
+                <button
+                    type="submit"
+                    class="btn save"
+                >
+                    Save {{ item_type }}
+                </button>
+
+                <a
+                    href="{% url 'foods_sides' %}"
+                    class="btn cancel"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

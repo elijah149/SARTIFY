@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit {{ day_name }} Menu</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, sans-serif;
+            background: #f6f8f7;
+            color: #17231c;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: #166534;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e2e9e4;
+            border-radius: 14px;
+            padding: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .subtitle {
+            color: #718078;
+            margin: 7px 0 28px;
+            font-size: 13px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .choice {
+            border: 1px solid #dfe7e1;
+            border-radius: 9px;
+            padding: 12px;
+            background: #fafcfb;
+        }
+
+        .choice:hover {
+            border-color: #166534;
+        }
+
+        .choice label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .choice input {
+            width: 16px;
+            height: 16px;
+            accent-color: #166534;
+        }
+
+        .active-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 25px;
+        }
+
+        .active-row input {
+            width: 16px;
+            height: 16px;
+            accent-color: #166534;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        button,
+        .cancel {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 18px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background: #166534;
+            color: white;
+        }
+
+        .cancel {
+            background: #eef2ef;
+            color: #344139;
+        }
+
+        .error {
+            color: #b91c1c;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 700px) {
+            .choices {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .choices {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{% url 'daily_menu' %}" class="back">
+        Back to Daily Menu
+    </a>
+
+    <div class="card">
+
+        <h1>{{ day_name }} Menu</h1>
+
+        <div class="subtitle">
+            Select the foods and sides that users can order on {{ day_name }}.
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="section">
+
+                <div class="section-title">
+                    Foods
+                </div>
+
+                <div class="choices">
+
+                    {% for checkbox in form.foods %}
+
+                        <div class="choice">
+                            {{ checkbox }}
+                        </div>
+
+                    {% empty %}
+
+                        <p>
+                            No active foods available.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <div class="section">
+
+                <div class="section-title">
+                    Sides
+                </div>
+
+                <div class="choices">
+
+                    {% for checkbox in form.vegetables %}
+
+                        <div class="choice">
+                            {{ checkbox }}
+                        </div>
+
+                    {% empty %}
+
+                        <p>
+                            No active sides available.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <label class="active-row">
+                {{ form.is_active }}
+                Menu is active
+            </label>
+
+
+            {% for error in form.non_field_errors %}
+                <div class="error">
+                    {{ error }}
+                </div>
+            {% endfor %}
+
+
+            <div class="actions">
+
+                <button type="submit">
+                    Save Menu
+                </button>
+
+                <a
+                    href="{% url 'daily_menu' %}"
+                    class="cancel"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

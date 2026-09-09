@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Food Management - My Orders</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f4f7f5;
+            color: #17231c;
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 245px;
+            background: #10251a;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 28px 18px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            padding: 0 12px 30px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            margin-bottom: 25px;
+        }
+
+        .brand h2 {
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .brand p {
+            color: #a8b8ae;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #b9c8be;
+            padding: 13px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: .2s;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: #166534;
+            color: white;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .logout {
+            text-decoration: none;
+            display: block;
+            color: #d5ddd8;
+            padding: 13px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .logout:hover {
+            background: #2d3d34;
+            color: white;
+        }
+
+        .main {
+            margin-left: 245px;
+            width: calc(100% - 245px);
+            padding: 38px;
+        }
+
+        .header {
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 29px;
+            font-weight: 800;
+            letter-spacing: -.8px;
+        }
+
+        .header p {
+            margin-top: 7px;
+            color: #707c74;
+            font-size: 14px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #e1e8e3;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(16,37,26,.045);
+        }
+
+        .summary-label {
+            color: #77837b;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            font-weight: 700;
+        }
+
+        .summary-number {
+            margin-top: 8px;
+            color: #166534;
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .orders-card {
+            background: white;
+            border: 1px solid #e1e8e3;
+            border-radius: 17px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(16,37,26,.05);
+        }
+
+        .card-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #edf1ee;
+        }
+
+        .card-header h2 {
+            font-size: 17px;
+            font-weight: 750;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        th {
+            background: #f3f7f4;
+            padding: 15px 18px;
+            text-align: left;
+            font-size: 10px;
+            color: #5f6b63;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 17px 18px;
+            border-top: 1px solid #edf1ee;
+            color: #36433b;
+            font-size: 13px;
+        }
+
+        .date {
+            font-weight: 700;
+            color: #26352c;
+        }
+
+        .food {
+            font-weight: 700;
+            color: #176335;
+        }
+
+        .side {
+            color: #7d8981;
+        }
+
+        .quantity {
+            font-weight: 700;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 7px;
+            background: #edf7ef;
+            color: #26703d;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .cancel-button {
+            border: 1px solid #edcccc;
+            background: #fff4f4;
+            color: #b23b3b;
+            padding: 7px 10px;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .cancel-button:hover {
+            background: #fbe2e2;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 55px 20px;
+            color: #7f8a82;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 205px;
+            }
+
+            .main {
+                margin-left: 205px;
+                width: calc(100% - 205px);
+                padding: 25px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                padding: 18px;
+            }
+
+            .brand {
+                padding-bottom: 18px;
+                margin-bottom: 12px;
+            }
+
+            .nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .sidebar-bottom {
+                margin-top: 10px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 24px 16px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <h2>Food Management</h2>
+            <p>User Portal</p>
+        </div>
+
+        <nav class="nav">
+
+            <a href="{% url 'dashboard' %}">
+                Dashboard
+            </a>
+
+            <a
+                href="{% url 'my_orders' %}"
+                class="active"
+            >
+                My Orders
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="header">
+
+            <h1>
+                My Orders
+            </h1>
+
+            <p>
+                View and manage your active meal orders.
+            </p>
+
+        </div>
+
+
+        <div class="summary">
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Active Orders
+                </div>
+
+                <div class="summary-number">
+                    {{ orders|length }}
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Ordering Days
+                </div>
+
+                <div class="summary-number">
+                    Monday - Friday
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Account
+                </div>
+
+                <div class="summary-number">
+                    {{ request.user.username }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="orders-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Your Active Orders
+                </h2>
+
+            </div>
+
+
+            {% if orders %}
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Date</th>
+                                <th>Food</th>
+                                <th>Side</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for order in orders %}
+
+                                <tr>
+
+                                    <td class="date">
+                                        {{ order.order_date|date:"D, M d, Y" }}
+                                    </td>
+
+                                    <td class="food">
+                                        {{ order.food.name }}
+                                    </td>
+
+                                    <td class="side">
+
+                                        {% if order.vegetable %}
+                                            {{ order.vegetable.name }}
+                                        {% else %}
+                                            No side
+                                        {% endif %}
+
+                                    </td>
+
+                                    <td class="quantity">
+                                        {{ order.quantity }}
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status">
+                                            {{ order.get_status_display }}
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        {% if order.status == "pending" %}
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'cancel_order' order.id %}"
+                                            >
+
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="cancel-button"
+                                                    onclick="return confirm('Are you sure you want to cancel this order?');"
+                                                >
+                                                    Cancel Order
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+                    You do not have any active orders.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

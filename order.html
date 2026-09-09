@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Place Order - Food Management System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+
+        .back {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Place Food Order</h1>
+
+    <h2>Monday</h2>
+
+    <p>
+        Order date: Sept. 7, 2026
+    </p>
+
+    <form method="post">
+
+        <input type="hidden" name="csrfmiddlewaretoken" value="dKQ16YNrX5pbBADanwjbss2ik9M5Kq47f4p73QOyaXT0Yi5O4bDgET0ek1jCx2mr">
+
+        <p>
+    <label for="id_food">Food:</label>
+    <select name="food" required id="id_food">
+  <option value="" selected>- Select an option -</option>
+
+  <option value="6">Chips</option>
+
+  <option value="4">Rice</option>
+
+  <option value="5">Ugali</option>
+
+</select>
+    
+    
+  </p>
+
+  
+  <p>
+    <label for="id_vegetable">Vegetable:</label>
+    <select name="vegetable" id="id_vegetable">
+  <option value="" selected>- Select an option -</option>
+
+  <option value="4">Beans</option>
+
+  <option value="6">Chicken</option>
+
+</select>
+    
+    
+  </p>
+
+  
+  <p>
+    <label for="id_quantity">Quantity:</label>
+    <input type="number" name="quantity" value="1" min="0" value="1" required id="id_quantity">
+    
+    
+  </p>
+
+  
+  <p>
+    <label for="id_special_request">Special request:</label>
+    <textarea name="special_request" cols="40" rows="3" placeholder="Optional special request" id="id_special_request">
+</textarea>
+    
+    
+      
+    
+  </p>
+
+        <button type="submit">
+            Place Order
+        </button>
+
+        <a class="back" href="/dashboard/">
+            Back to Dashboard
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

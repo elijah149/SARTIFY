@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, sans-serif;
+            background: #f6f8f7;
+            color: #17231c;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 250px;
+            height: 100vh;
+            background: #10251a;
+            color: white;
+            padding: 28px 18px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: 700;
+            padding: 0 12px;
+            margin-bottom: 38px;
+        }
+
+        .section-title {
+            color: #91a79a;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 25px 12px 9px;
+        }
+
+        .nav-link {
+            display: block;
+            text-decoration: none;
+            color: #d7e2db;
+            padding: 11px 12px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #166534;
+            color: white;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 34px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #718078;
+            margin-top: 7px;
+            font-size: 14px;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 16px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #166534;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #14532d;
+        }
+
+        .search {
+            background: white;
+            padding: 16px;
+            border: 1px solid #e2e9e4;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            border: 1px solid #d5ded8;
+            border-radius: 8px;
+            padding: 11px 13px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #166534;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e2e9e4;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            background: #f8faf9;
+            color: #637169;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 15px 20px;
+        }
+
+        td {
+            padding: 17px 20px;
+            border-top: 1px solid #edf1ee;
+            font-size: 13px;
+        }
+
+        .username {
+            font-weight: 600;
+        }
+
+        .date {
+            color: #78857d;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .active {
+            color: #166534;
+            background: #dcfce7;
+        }
+
+        .inactive {
+            color: #6b7280;
+            background: #f1f5f2;
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .action {
+            text-decoration: none;
+            border: 1px solid #dce4df;
+            padding: 7px 10px;
+            border-radius: 7px;
+            color: #344139;
+            background: white;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .delete {
+            color: #b91c1c;
+            border-color: #fecaca;
+            cursor: pointer;
+        }
+
+        .empty {
+            padding: 40px;
+            text-align: center;
+            color: #7d8982;
+        }
+
+        .message {
+            background: white;
+            padding: 13px 15px;
+            border-left: 4px solid #166534;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .card {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 700px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="brand">Food Management</div>
+
+    <div class="section-title">Overview</div>
+
+    <a href="{% url 'admin_dashboard' %}" class="nav-link">
+        Dashboard
+    </a>
+
+    <a href="{% url 'admin_orders' %}" class="nav-link">
+        Weekly Orders
+    </a>
+
+    <div class="section-title">Management</div>
+
+    <a href="{% url 'daily_menu' %}" class="nav-link">
+        Daily Meals
+    </a>
+
+    <a href="{% url 'users_list' %}" class="nav-link active">
+        Users
+    </a>
+
+    <a href="{% url 'daily_menu' %}" class="nav-link">
+        Daily Menu
+    </a>
+
+    <div class="section-title">System</div>
+
+    <a href="/admin/" class="nav-link">
+        
+    </a>
+
+    <a href="{% url 'logout' %}" class="nav-link">
+        Logout
+    </a>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="header">
+
+        <div>
+            <h1>Users</h1>
+            <div class="subtitle">
+                Manage users who can place food orders.
+            </div>
+        </div>
+
+        <a href="{% url 'add_user' %}" class="btn primary">
+            Add User
+        </a>
+
+    </div>
+
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+    <div class="search">
+
+        <form method="GET">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search by username..."
+            >
+
+            <button class="btn primary" type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        {% if users %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Status</th>
+                    <th>Joined</th>
+                    <th>Last Login</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for user in users %}
+
+                <tr>
+
+                    <td class="username">
+                        {{ user.username }}
+                    </td>
+
+                    <td>
+                        {% if user.is_active %}
+                            <span class="status active">
+                                Active
+                            </span>
+                        {% else %}
+                            <span class="status inactive">
+                                Inactive
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td class="date">
+                        {{ user.date_joined|date:"d M Y" }}
+                    </td>
+
+                    <td class="date">
+                        {% if user.last_login %}
+                            {{ user.last_login|date:"d M Y H:i" }}
+                        {% else %}
+                            Never
+                        {% endif %}
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                href="{% url 'edit_user' user.id %}"
+                                class="action"
+                            >
+                                Edit
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{% url 'delete_user' user.id %}"
+                                onsubmit="return confirm('Are you sure you want to delete this user?');"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="action delete"
+                                >
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+            <div class="empty">
+                No users found.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</main>
+
+</body>
+</html>

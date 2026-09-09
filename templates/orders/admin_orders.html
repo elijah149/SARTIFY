@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Orders</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: #f5f7f6;
+            color: #17231c;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 235px;
+            background: #10251a;
+            color: white;
+            padding: 24px 16px;
+            position: fixed;
+            inset: 0 auto 0 0;
+        }
+
+        .logo {
+            font-size: 19px;
+            font-weight: 700;
+            padding: 0 12px 32px;
+        }
+
+        .nav-title {
+            color: #82938a;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin: 20px 12px 8px;
+        }
+
+        .nav a {
+            display: block;
+            color: #dce8e0;
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: #166534;
+            color: white;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 235px;
+            width: calc(100% - 235px);
+            padding: 32px;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 7px;
+            font-size: 27px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 0;
+            color: #718078;
+            font-size: 13px;
+        }
+
+        /* WEEK INFO */
+
+        .week-info {
+            background: white;
+            border: 1px solid #e0e8e3;
+            border-radius: 10px;
+            padding: 13px 16px;
+            margin-bottom: 20px;
+            color: #59675f;
+            font-size: 12px;
+        }
+
+        .week-info strong {
+            color: #166534;
+        }
+
+        /* TABLE */
+
+        .table-card {
+            background: white;
+            border: 1px solid #e0e8e3;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(16, 37, 26, .05);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            background: #10251a;
+            color: white;
+            padding: 15px 14px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            white-space: nowrap;
+        }
+
+        thead th:first-child {
+            width: 150px;
+        }
+
+        tbody td {
+            padding: 15px 14px;
+            border-bottom: 1px solid #edf1ee;
+            vertical-align: top;
+            font-size: 12px;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #fafcfb;
+        }
+
+        .username {
+            font-weight: 700;
+            color: #166534;
+        }
+
+        /* MEALS */
+
+        .meal {
+            background: #f1f6f3;
+            border: 1px solid #dce7e0;
+            border-radius: 7px;
+            padding: 8px 9px;
+            margin-bottom: 6px;
+            color: #285039;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .meal:last-child {
+            margin-bottom: 0;
+        }
+
+        .empty {
+            color: #9aa49e;
+            font-size: 11px;
+        }
+
+        /* FOOTER */
+
+        .table-footer {
+            padding: 13px 16px;
+            border-top: 1px solid #edf1ee;
+            color: #7b8780;
+            font-size: 11px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Food Management
+        </div>
+
+        <div class="nav">
+
+            <div class="nav-title">
+                Main
+            </div>
+
+            <a href="{% url 'admin_dashboard' %}">
+                Dashboard
+            </a>
+
+            <div class="nav-title">
+                Management
+            </div>
+
+            <a href="{% url 'users_list' %}">
+                Users
+            </a>
+
+            <a href="{% url 'daily_menu' %}">
+                Daily Meals
+            </a>
+
+            <a href="{% url 'admin_orders' %}" class="active">
+                Orders
+            </a>
+
+            <div class="nav-title">
+                Account
+            </div>
+
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="header">
+
+            <h1>
+                Orders
+            </h1>
+
+            <p>
+                Weekly food orders from Monday to Friday.
+            </p>
+
+        </div>
+
+
+        <div class="week-info">
+
+            Week:
+            <strong>{{ monday }}</strong>
+            to
+            <strong>{{ friday }}</strong>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>User</th>
+
+                            {% for day in days %}
+                                <th>{{ day }}</th>
+                            {% endfor %}
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for user in users %}
+
+                        <tr>
+
+                            <td>
+                                <span class="username">
+                                    {{ user.username }}
+                                </span>
+                            </td>
+
+
+                            <!-- MONDAY -->
+
+                            <td>
+
+                                {% for meal in user.Monday %}
+
+                                    <div class="meal">
+                                        {{ meal }}
+                                    </div>
+
+                                {% empty %}
+
+                                    <span class="empty">No order</span>
+
+                                {% endfor %}
+
+                            </td>
+
+
+                            <!-- TUESDAY -->
+
+                            <td>
+
+                                {% for meal in user.Tuesday %}
+
+                                    <div class="meal">
+                                        {{ meal }}
+                                    </div>
+
+                                {% empty %}
+
+                                    <span class="empty">No order</span>
+
+                                {% endfor %}
+
+                            </td>
+
+
+                            <!-- WEDNESDAY -->
+
+                            <td>
+
+                                {% for meal in user.Wednesday %}
+
+                                    <div class="meal">
+                                        {{ meal }}
+                                    </div>
+
+                                {% empty %}
+
+                                    <span class="empty">No order</span>
+
+                                {% endfor %}
+
+                            </td>
+
+
+                            <!-- THURSDAY -->
+
+                            <td>
+
+                                {% for meal in user.Thursday %}
+
+                                    <div class="meal">
+                                        {{ meal }}
+                                    </div>
+
+                                {% empty %}
+
+                                    <span class="empty">No order</span>
+
+                                {% endfor %}
+
+                            </td>
+
+
+                            <!-- FRIDAY -->
+
+                            <td>
+
+                                {% for meal in user.Friday %}
+
+                                    <div class="meal">
+                                        {{ meal }}
+                                    </div>
+
+                                {% empty %}
+
+                                    <span class="empty">No order</span>
+
+                                {% endfor %}
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="6">
+                                <span class="empty">
+                                    No orders for this week.
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="table-footer">
+                Orders are displayed for the current Monday to Friday week.
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
