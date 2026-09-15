@@ -8,6 +8,7 @@ from .user_forms import UserCreateForm, UserEditForm
 
 def staff_required(view_func):
     def wrapper(request, *args, **kwargs):
+
         if not request.user.is_authenticated:
             return redirect("login")
 
@@ -25,14 +26,11 @@ def staff_required(view_func):
 
 @staff_required
 def users_list(request):
-    search = request.GET.get(
-        "search",
-        ""
-    ).strip()
 
-    users = User.objects.filter(
-        is_staff=False
-    ).order_by(
+    search = request.GET.get("search", "").strip()
+
+    users = User.objects.all().order_by(
+        "-is_staff",
         "username"
     )
 
@@ -53,18 +51,28 @@ def users_list(request):
 
 @staff_required
 def add_user(request):
+
     if request.method == "POST":
+
         form = UserCreateForm(request.POST)
 
         if form.is_valid():
-            form.save()
 
-            messages.success(
-                request,
-                "User created successfully."
-            )
+            user = form.save()
+
+            if user.is_staff:
+                messages.success(
+                    request,
+                    f"Administrator {user.username} created successfully."
+                )
+            else:
+                messages.success(
+                    request,
+                    f"User {user.username} created successfully."
+                )
 
             return redirect("users_list")
+
     else:
         form = UserCreateForm()
 
@@ -80,27 +88,30 @@ def add_user(request):
 
 @staff_required
 def edit_user(request, user_id):
+
     user = get_object_or_404(
         User,
-        id=user_id,
-        is_staff=False
+        id=user_id
     )
 
     if request.method == "POST":
+
         form = UserEditForm(
             request.POST,
             instance=user
         )
 
         if form.is_valid():
-            form.save()
+
+            updated_user = form.save()
 
             messages.success(
                 request,
-                "User updated successfully."
+                f"User {updated_user.username} updated successfully."
             )
 
             return redirect("users_list")
+
     else:
         form = UserEditForm(
             instance=user
@@ -119,20 +130,31 @@ def edit_user(request, user_id):
 
 @staff_required
 def delete_user(request, user_id):
+
     user = get_object_or_404(
         User,
-        id=user_id,
-        is_staff=False
+        id=user_id
     )
 
+    # Prevent an administrator from deleting their own account.
+    if user.id == request.user.id:
+
+        messages.error(
+            request,
+            "You cannot delete your own account."
+        )
+
+        return redirect("users_list")
+
     if request.method == "POST":
+
         username = user.username
 
         user.delete()
 
         messages.success(
             request,
-            f"User {username} deleted successfully."
+            f"Account {username} deleted successfully."
         )
 
     return redirect("users_list")

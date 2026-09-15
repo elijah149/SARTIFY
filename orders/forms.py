@@ -6,28 +6,15 @@ from .models import Order
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
+
         fields = [
             "food",
             "vegetable",
-            "quantity",
-            "special_request",
         ]
 
         widgets = {
             "food": forms.Select(),
             "vegetable": forms.Select(),
-            "quantity": forms.NumberInput(
-                attrs={
-                    "min": 1,
-                    "value": 1,
-                }
-            ),
-            "special_request": forms.Textarea(
-                attrs={
-                    "rows": 3,
-                    "placeholder": "Optional special request",
-                }
-            ),
         }
 
     def __init__(self, *args, **kwargs):

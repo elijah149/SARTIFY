@@ -208,7 +208,12 @@ def admin_orders(request):
         order_date__range=(
             monday,
             friday
-        )
+        ),
+        status__in=[
+            "pending",
+            "confirmed",
+            "completed",
+        ]
     ).select_related(
         "user",
         "food",
