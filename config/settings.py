@@ -10,7 +10,14 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = [".railway.app", ".up.railway.app", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "sartifyllc.vercel.app",
+    ".vercel.app",
+    ".railway.app",
+    ".up.railway.app",
+    "localhost",
+    "127.0.0.1",
+]
 
 CSRF_TRUSTED_ORIGINS = ["https://*.railway.app", "https://*.up.railway.app"]
 
