@@ -76,7 +76,11 @@ DATABASES = {
         "USER": os.environ.get("PGUSER") or os.environ.get("POSTGRES_USER") or os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("PGPASSWORD") or os.environ.get("POSTGRES_PASSWORD") or os.environ.get("DB_PASSWORD"),
         "HOST": os.environ.get("PGHOST") or os.environ.get("POSTGRES_HOST") or os.environ.get("DB_HOST"),
-        "PORT": os.environ.get("PGPORT") or os.environ.get("POSTGRES_PORT") or os.environ.get("DB_PORT") or "5432",
+        "PORT": (
+            os.environ.get("PGPORT")
+            or os.environ.get("POSTGRES_PORT")
+            or ("5432" if os.environ.get("PGHOST") or os.environ.get("POSTGRES_HOST") else os.environ.get("DB_PORT") or "5432")
+        ),
         "OPTIONS": {
             "sslmode": "require",
         },
