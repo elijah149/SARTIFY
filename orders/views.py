@@ -124,8 +124,23 @@ def create_order(request, day_of_week):
 @login_required
 def my_orders(request):
 
+    # Current working week: Monday to Friday
+    today = date.today()
+
+    monday = today - timedelta(
+        days=today.weekday()
+    )
+
+    friday = monday + timedelta(days=4)
+
+    # Show only this week's active orders.
+    # Older orders remain in the database for admin/history.
     orders = Order.objects.filter(
         user=request.user,
+        order_date__range=(
+            monday,
+            friday
+        ),
         status__in=[
             "pending",
             "confirmed",
@@ -134,6 +149,8 @@ def my_orders(request):
     ).select_related(
         "food",
         "vegetable"
+    ).order_by(
+        "order_date"
     )
 
     return render(
@@ -141,6 +158,8 @@ def my_orders(request):
         "orders/my_orders.html",
         {
             "orders": orders,
+            "monday": monday,
+            "friday": friday,
         }
     )
 
@@ -196,19 +215,9 @@ def admin_orders(request):
         )
         return redirect("dashboard")
 
-    today = date.today()
-
-    monday = today - timedelta(
-        days=today.weekday()
-    )
-
-    friday = monday + timedelta(days=4)
-
+    # Show only active orders.
+    # Cancelled orders are never shown.
     orders = Order.objects.filter(
-        order_date__range=(
-            monday,
-            friday
-        ),
         status__in=[
             "pending",
             "confirmed",
@@ -218,6 +227,10 @@ def admin_orders(request):
         "user",
         "food",
         "vegetable"
+    ).order_by(
+        "user__username",
+        "order_date",
+        "-created_at"
     )
 
     user_data = {}
@@ -225,9 +238,9 @@ def admin_orders(request):
     for order in orders:
 
         username = order.user.username
+        day_name = order.order_date.strftime("%A")
 
         if username not in user_data:
-
             user_data[username] = {
                 "username": username,
                 "Monday": [],
@@ -237,12 +250,14 @@ def admin_orders(request):
                 "Friday": [],
             }
 
-        day_name = order.order_date.strftime("%A")
+        # Only one order per user per day.
+        if user_data[username][day_name]:
+            continue
 
         meal = order.food.name
 
         if order.vegetable:
-            meal += f" {order.vegetable.name}"
+            meal += f" + {order.vegetable.name}"
 
         user_data[username][day_name].append(meal)
 
@@ -266,7 +281,5 @@ def admin_orders(request):
         {
             "users": users,
             "days": days,
-            "monday": monday,
-            "friday": friday,
         }
     )

@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Food Management - My Orders</title>
+    <title>SARTIFY | My Orders</title>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
@@ -19,199 +19,451 @@
 
     <style>
 
+        :root {
+            --primary: #166534;
+            --primary-dark: #14532d;
+            --primary-soft: #eaf6ee;
+
+            --sidebar: #0d2116;
+            --sidebar-hover: #173d27;
+
+            --background: #f5f8f6;
+            --white: #ffffff;
+
+            --text: #17251d;
+            --muted: #6b776f;
+
+            --border: #e4ebe6;
+
+            --danger: #b91c1c;
+            --danger-soft: #fee2e2;
+
+            --shadow: 0 8px 30px rgba(13, 33, 22, 0.06);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: "Inter", sans-serif;
-            background: #f4f7f5;
-            color: #17231c;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
         }
+
+        /* =========================
+           LAYOUT
+        ========================= */
 
         .layout {
             min-height: 100vh;
-            display: flex;
         }
 
+        /* =========================
+           SIDEBAR
+        ========================= */
+
         .sidebar {
-            width: 245px;
-            background: #10251a;
             position: fixed;
-            left: 0;
             top: 0;
+            left: 0;
             bottom: 0;
-            padding: 28px 18px;
+
+            width: 248px;
+
+            padding: 25px 16px;
+
+            background: var(--sidebar);
             color: white;
+
             display: flex;
             flex-direction: column;
+
+            z-index: 100;
         }
 
         .brand {
-            padding: 0 12px 30px;
-            border-bottom: 1px solid rgba(255,255,255,.1);
-            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 4px 12px 28px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 24px;
         }
 
-        .brand h2 {
-            font-size: 21px;
+        .brand-mark {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 16px;
             font-weight: 800;
         }
 
-        .brand p {
-            color: #a8b8ae;
-            font-size: 12px;
-            margin-top: 5px;
+        .brand-text {
+            font-size: 21px;
+            font-weight: 800;
+
+            letter-spacing: -0.6px;
+        }
+
+        .brand-text span {
+            color: #65a30d;
+        }
+
+        .nav-label {
+            padding: 0 12px 9px;
+
+            color: #809087;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .nav {
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 5px;
         }
 
-        .nav a {
+        .nav a,
+        .logout {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            padding: 12px 13px;
+
+            border-radius: 9px;
+
+            color: #cbd8cf;
+
             text-decoration: none;
-            color: #b9c8be;
-            padding: 13px 14px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: .2s;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
         }
 
         .nav a:hover,
-        .nav a.active {
-            background: #166534;
+        .logout:hover {
+            background: var(--sidebar-hover);
             color: white;
+            transform: translateX(2px);
+        }
+
+        .nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 15px;
         }
 
         .sidebar-bottom {
             margin-top: auto;
+
+            padding-top: 18px;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
         }
 
-        .logout {
-            text-decoration: none;
-            display: block;
-            color: #d5ddd8;
-            padding: 13px 14px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-
-        .logout:hover {
-            background: #2d3d34;
-            color: white;
-        }
+        /* =========================
+           MAIN
+        ========================= */
 
         .main {
-            margin-left: 245px;
-            width: calc(100% - 245px);
-            padding: 38px;
+            margin-left: 248px;
+
+            min-height: 100vh;
+
+            padding: 34px;
         }
 
-        .header {
+        .main-inner {
+            width: 100%;
+            max-width: 1450px;
+
+            margin: 0 auto;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            gap: 20px;
+
             margin-bottom: 28px;
         }
 
         .header h1 {
-            font-size: 29px;
+            font-size: 28px;
             font-weight: 800;
-            letter-spacing: -.8px;
+
+            letter-spacing: -0.8px;
         }
 
         .header p {
             margin-top: 7px;
-            color: #707c74;
-            font-size: 14px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+            line-height: 1.5;
         }
+
+        .profile-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 8px 12px 8px 8px;
+
+            background: var(--white);
+
+            border: 1px solid var(--border);
+            border-radius: 11px;
+
+            box-shadow: 0 3px 12px rgba(13,33,22,0.03);
+        }
+
+        .profile-avatar {
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 9px;
+
+            background: var(--primary-soft);
+            color: var(--primary);
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .profile-info strong {
+            display: block;
+
+            font-size: 12px;
+        }
+
+        .profile-info span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+        }
+
+        /* =========================
+           SUMMARY
+        ========================= */
 
         .summary {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+
+            gap: 14px;
+
             margin-bottom: 28px;
         }
 
         .summary-card {
-            background: white;
-            border: 1px solid #e1e8e3;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(16,37,26,.045);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            min-width: 0;
+
+            padding: 18px;
+
+            background: var(--white);
+
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            box-shadow: var(--shadow);
         }
 
-        .summary-label {
-            color: #77837b;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-            font-weight: 700;
-        }
+        .summary-icon {
+            flex: 0 0 auto;
 
-        .summary-number {
-            margin-top: 8px;
-            color: #166534;
-            font-size: 25px;
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: var(--primary-soft);
+            color: var(--primary);
+
+            font-size: 17px;
             font-weight: 800;
         }
 
-        .orders-card {
-            background: white;
-            border: 1px solid #e1e8e3;
-            border-radius: 17px;
+        .summary-label {
+            color: var(--muted);
+
+            font-size: 10px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+
+        .summary-number {
+            margin-top: 5px;
+
+            color: var(--text);
+
+            font-size: 18px;
+            font-weight: 800;
+
             overflow: hidden;
-            box-shadow: 0 5px 18px rgba(16,37,26,.05);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .summary-card:first-child .summary-number {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        /* =========================
+           ORDERS CARD
+        ========================= */
+
+        .orders-card {
+            overflow: hidden;
+
+            background: var(--white);
+
+            border: 1px solid var(--border);
+            border-radius: 15px;
+
+            box-shadow: var(--shadow);
         }
 
         .card-header {
-            padding: 20px 22px;
-            border-bottom: 1px solid #edf1ee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 19px 20px;
+
+            border-bottom: 1px solid var(--border);
         }
 
         .card-header h2 {
-            font-size: 17px;
-            font-weight: 750;
+            font-size: 16px;
+            font-weight: 800;
         }
 
+        .card-header span {
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
         .table-wrapper {
+            width: 100%;
             overflow-x: auto;
         }
 
         table {
             width: 100%;
+            min-width: 720px;
+
             border-collapse: collapse;
-            min-width: 760px;
         }
 
         th {
-            background: #f3f7f4;
-            padding: 15px 18px;
+            padding: 12px 18px;
+
+            background: #f8faf8;
+
+            color: #718078;
+
             text-align: left;
+
             font-size: 10px;
-            color: #5f6b63;
+            font-weight: 800;
+
             text-transform: uppercase;
-            letter-spacing: .6px;
-            font-weight: 700;
+            letter-spacing: 0.6px;
         }
 
         td {
-            padding: 17px 18px;
+            padding: 15px 18px;
+
             border-top: 1px solid #edf1ee;
+
             color: #36433b;
-            font-size: 13px;
+
+            font-size: 12px;
+        }
+
+        tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: #fbfdfb;
         }
 
         .date {
-            font-weight: 700;
             color: #26352c;
+            font-weight: 700;
         }
 
         .food {
-            font-weight: 700;
             color: #176335;
+            font-weight: 700;
         }
 
         .side {
@@ -223,71 +475,124 @@
         }
 
         .status {
-            display: inline-block;
-            padding: 6px 10px;
-            border-radius: 7px;
-            background: #edf7ef;
-            color: #26703d;
-            font-size: 10px;
-            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+
+            padding: 5px 8px;
+
+            border-radius: 6px;
+
+            background: var(--primary-soft);
+            color: var(--primary);
+
+            font-size: 9px;
+            font-weight: 800;
+
             text-transform: uppercase;
         }
 
         .cancel-button {
             border: 1px solid #edcccc;
-            background: #fff4f4;
-            color: #b23b3b;
+
+            background: #fff5f5;
+            color: var(--danger);
+
             padding: 7px 10px;
+
             border-radius: 7px;
+
             font-family: inherit;
-            font-size: 11px;
-            font-weight: 700;
+
+            font-size: 10px;
+            font-weight: 800;
+
             cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
         }
 
         .cancel-button:hover {
-            background: #fbe2e2;
+            background: var(--danger-soft);
+            transform: translateY(-1px);
         }
 
+        /* =========================
+           EMPTY
+        ========================= */
+
         .empty {
-            text-align: center;
             padding: 55px 20px;
-            color: #7f8a82;
+
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        .empty-icon {
+            width: 46px;
+            height: 46px;
+
+            display: grid;
+            place-items: center;
+
+            margin: 0 auto 12px;
+
+            border-radius: 13px;
+
+            background: #f0f4f1;
+            color: #738078;
+
+            font-size: 18px;
+        }
+
+        .empty strong {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: var(--text);
+
             font-size: 13px;
         }
 
-        @media (max-width: 800px) {
+        /* =========================
+           TABLET
+        ========================= */
 
-            .sidebar {
-                width: 205px;
-            }
+        @media (max-width: 1000px) {
 
             .main {
-                margin-left: 205px;
-                width: calc(100% - 205px);
-                padding: 25px;
+                padding: 28px;
             }
 
             .summary {
                 grid-template-columns: 1fr;
             }
+
         }
 
-        @media (max-width: 600px) {
-
-            .layout {
-                display: block;
-            }
+        @media (max-width: 800px) {
 
             .sidebar {
                 position: relative;
+
                 width: 100%;
-                padding: 18px;
+                height: auto;
+
+                padding: 16px 18px;
             }
 
             .brand {
-                padding-bottom: 18px;
-                margin-bottom: 12px;
+                padding: 2px 4px 15px;
+                margin-bottom: 14px;
+            }
+
+            .nav-label {
+                display: none;
             }
 
             .nav {
@@ -295,18 +600,190 @@
                 flex-wrap: wrap;
             }
 
+            .nav a {
+                flex: 1 1 140px;
+                justify-content: center;
+            }
+
             .sidebar-bottom {
-                margin-top: 10px;
+                display: block;
+
+                margin-top: 8px;
+
+                padding-top: 8px;
+
+                border-top: 0;
+            }
+
+            .logout {
+                justify-content: center;
             }
 
             .main {
                 margin-left: 0;
-                width: 100%;
-                padding: 24px 16px;
+
+                padding: 25px 20px 35px;
+            }
+
+            .topbar {
+                margin-bottom: 24px;
+            }
+
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 620px) {
+
+            .main {
+                padding: 20px 14px 30px;
+            }
+
+            .topbar {
+                flex-direction: column;
             }
 
             .header h1 {
-                font-size: 24px;
+                font-size: 23px;
+            }
+
+            .profile-chip {
+                width: 100%;
+            }
+
+            .summary {
+                gap: 10px;
+                margin-bottom: 22px;
+            }
+
+            .summary-card {
+                padding: 15px;
+            }
+
+            .card-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            /*
+             * Convert table rows into mobile cards.
+             */
+
+            .table-wrapper {
+                overflow: visible;
+            }
+
+            table,
+            thead,
+            tbody,
+            tr,
+            th,
+            td {
+                display: block;
+            }
+
+            table {
+                min-width: 0;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                margin: 12px;
+
+                padding: 12px;
+
+                border: 1px solid var(--border);
+                border-radius: 11px;
+
+                background: white;
+            }
+
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                gap: 15px;
+
+                padding: 8px 4px;
+
+                border: 0;
+
+                font-size: 11px;
+
+                text-align: right;
+            }
+
+            td::before {
+                content: attr(data-label);
+
+                color: #78847c;
+
+                font-size: 9px;
+                font-weight: 800;
+
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+
+                text-align: left;
+            }
+
+            td:last-child {
+                padding-top: 10px;
+            }
+
+            td:last-child form {
+                margin-left: auto;
+            }
+
+            .status {
+                font-size: 9px;
+            }
+
+        }
+
+        @media (max-width: 390px) {
+
+            .sidebar {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .brand-text {
+                font-size: 19px;
+            }
+
+            .nav a {
+                flex-basis: 100%;
+            }
+
+            .main {
+                padding-left: 11px;
+                padding-right: 11px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
             }
 
         }
@@ -315,31 +792,51 @@
 
 </head>
 
+
 <body>
 
 <div class="layout">
 
+    <!-- SIDEBAR -->
+
     <aside class="sidebar">
 
         <div class="brand">
-            <h2>Food Management</h2>
-            <p>User Portal</p>
+
+            <div class="brand-mark">
+                S
+            </div>
+
+            <div class="brand-text">
+                SARTI<span>FY</span>
+            </div>
+
         </div>
+
+
+        <div class="nav-label">
+            Menu
+        </div>
+
 
         <nav class="nav">
 
             <a href="{% url 'dashboard' %}">
-                Dashboard
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
             </a>
+
 
             <a
                 href="{% url 'my_orders' %}"
                 class="active"
             >
-                My Orders
+                <span class="nav-icon">▤</span>
+                <span>My Orders</span>
             </a>
 
         </nav>
+
 
         <div class="sidebar-bottom">
 
@@ -347,7 +844,8 @@
                 href="{% url 'logout' %}"
                 class="logout"
             >
-                Logout
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
             </a>
 
         </div>
@@ -355,170 +853,294 @@
     </aside>
 
 
+    <!-- MAIN -->
+
     <main class="main">
 
-        <div class="header">
-
-            <h1>
-                My Orders
-            </h1>
-
-            <p>
-                View and manage your active meal orders.
-            </p>
-
-        </div>
+        <div class="main-inner">
 
 
-        <div class="summary">
+            <!-- HEADER -->
 
-            <div class="summary-card">
+            <header class="topbar">
 
-                <div class="summary-label">
-                    Active Orders
+                <div class="header">
+
+                    <h1>
+                        My Orders
+                    </h1>
+
+                    <p>
+                        View and manage your orders for the current working week.
+                    </p>
+
                 </div>
 
-                <div class="summary-number">
-                    {{ orders|length }}
+
+                <div class="profile-chip">
+
+                    <div class="profile-avatar">
+                        {{ request.user.username|first|upper }}
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>
+                            {{ request.user.username }}
+                        </strong>
+
+                        <span>
+                            Food Management User
+                        </span>
+
+                    </div>
+
                 </div>
 
-            </div>
+            </header>
 
-            <div class="summary-card">
 
-                <div class="summary-label">
-                    Ordering Days
+            <!-- SUMMARY -->
+
+            <section class="summary">
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ▤
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Active Orders
+                        </div>
+
+                        <div class="summary-number">
+                            {{ orders|length }}
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="summary-number">
-                    Monday - Friday
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        5
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Ordering Days
+                        </div>
+
+                        <div class="summary-number">
+                            Monday – Friday
+                        </div>
+
+                    </div>
+
                 </div>
 
-            </div>
 
-            <div class="summary-card">
+                <div class="summary-card">
 
-                <div class="summary-label">
-                    Account
+                    <div class="summary-icon">
+                        U
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Account
+                        </div>
+
+                        <div class="summary-number">
+                            {{ request.user.username }}
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="summary-number">
-                    {{ request.user.username }}
+            </section>
+
+
+            <!-- ORDERS -->
+
+            <section class="orders-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Current Week Orders
+                    </h2>
+
+                    <span>
+                        Monday – Friday
+                    </span>
+
                 </div>
 
-            </div>
 
-        </div>
+                {% if orders %}
 
+                    <div class="table-wrapper">
 
-        <div class="orders-card">
+                        <table>
 
-            <div class="card-header">
-
-                <h2>
-                    Your Active Orders
-                </h2>
-
-            </div>
-
-
-            {% if orders %}
-
-                <div class="table-wrapper">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>Date</th>
-                                <th>Food</th>
-                                <th>Side</th>
-                                <th>Quantity</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            {% for order in orders %}
+                            <thead>
 
                                 <tr>
 
-                                    <td class="date">
-                                        {{ order.order_date|date:"D, M d, Y" }}
-                                    </td>
+                                    <th>
+                                        Date
+                                    </th>
 
-                                    <td class="food">
-                                        {{ order.food.name }}
-                                    </td>
+                                    <th>
+                                        Food
+                                    </th>
 
-                                    <td class="side">
+                                    <th>
+                                        Side
+                                    </th>
 
-                                        {% if order.vegetable %}
-                                            {{ order.vegetable.name }}
-                                        {% else %}
-                                            No side
-                                        {% endif %}
+                                    <th>
+                                        Quantity
+                                    </th>
 
-                                    </td>
+                                    <th>
+                                        Status
+                                    </th>
 
-                                    <td class="quantity">
-                                        {{ order.quantity }}
-                                    </td>
-
-                                    <td>
-
-                                        <span class="status">
-                                            {{ order.get_status_display }}
-                                        </span>
-
-                                    </td>
-
-                                    <td>
-
-                                        {% if order.status == "pending" %}
-
-                                            <form
-                                                method="post"
-                                                action="{% url 'cancel_order' order.id %}"
-                                            >
-
-                                                {% csrf_token %}
-
-                                                <button
-                                                    type="submit"
-                                                    class="cancel-button"
-                                                    onclick="return confirm('Are you sure you want to cancel this order?');"
-                                                >
-                                                    Cancel Order
-                                                </button>
-
-                                            </form>
-
-                                        {% endif %}
-
-                                    </td>
+                                    <th>
+                                        Action
+                                    </th>
 
                                 </tr>
 
-                            {% endfor %}
+                            </thead>
 
-                        </tbody>
 
-                    </table>
+                            <tbody>
 
-                </div>
+                                {% for order in orders %}
 
-            {% else %}
+                                    <tr>
 
-                <div class="empty">
-                    You do not have any active orders.
-                </div>
+                                        <td
+                                            class="date"
+                                            data-label="Date"
+                                        >
+                                            {{ order.order_date|date:"D, M d, Y" }}
+                                        </td>
 
-            {% endif %}
+
+                                        <td
+                                            class="food"
+                                            data-label="Food"
+                                        >
+                                            {{ order.food.name }}
+                                        </td>
+
+
+                                        <td
+                                            class="side"
+                                            data-label="Side"
+                                        >
+
+                                            {% if order.vegetable %}
+
+                                                {{ order.vegetable.name }}
+
+                                            {% else %}
+
+                                                No side
+
+                                            {% endif %}
+
+                                        </td>
+
+
+                                        <td
+                                            class="quantity"
+                                            data-label="Quantity"
+                                        >
+                                            {{ order.quantity }}
+                                        </td>
+
+
+                                        <td data-label="Status">
+
+                                            <span class="status">
+                                                {{ order.get_status_display }}
+                                            </span>
+
+                                        </td>
+
+
+                                        <td data-label="Action">
+
+                                            {% if order.status == "pending" %}
+
+                                                <form
+                                                    method="post"
+                                                    action="{% url 'cancel_order' order.id %}"
+                                                >
+
+                                                    {% csrf_token %}
+
+                                                    <button
+                                                        type="submit"
+                                                        class="cancel-button"
+                                                        onclick="return confirm('Are you sure you want to cancel this order?');"
+                                                    >
+                                                        Cancel Order
+                                                    </button>
+
+                                                </form>
+
+                                            {% else %}
+
+                                                -
+
+                                            {% endif %}
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            ▤
+                        </div>
+
+                        <strong>
+                            No orders yet
+                        </strong>
+
+                        You do not have any active orders for this week.
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
 
         </div>
 

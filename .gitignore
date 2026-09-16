@@ -6,3 +6,9 @@ __pycache__/
 .DS_Store
 .neon
 *.bak
+.vercel
+.env*
+
+# Local AI/agent tooling
+.agents/
+skills-lock.json

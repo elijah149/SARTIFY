@@ -1,5 +1,6 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
+from django.views.generic import RedirectView
 
 from accounts import views as account_views
 from accounts import user_views
@@ -9,6 +10,16 @@ from orders import views as order_views
 
 
 urlpatterns = [
+
+    # Root → Login
+    path(
+        "",
+        RedirectView.as_view(
+            pattern_name="login",
+            permanent=False
+        ),
+        name="home",
+    ),
 
     # Authentication
     path(

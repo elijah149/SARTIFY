@@ -3,169 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SARTIFY</title>
+
+    <title>SARTIFY | Sign In</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --green-950: #071f13;
+            --green-900: #0b2b19;
+            --green-800: #12552e;
+            --green-700: #176b39;
+            --green-600: #208549;
+            --green-100: #e8f5ec;
+            --green-50: #f4faf6;
+
+            --text: #17231c;
+            --muted: #6b776f;
+            --border: #dce5df;
+            --danger: #b42318;
+            --danger-bg: #fff3f2;
+            --white: #ffffff;
+            --background: #f4f7f5;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        html,
+        body {
+            min-height: 100%;
+        }
+
         body {
             min-height: 100vh;
-            font-family: "Inter", sans-serif;
-            background: #f4f7f5;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", Roboto, Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #17221b;
+            padding: 30px 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .login-wrapper {
-            width: 100%;
-            max-width: 430px;
-            padding: 24px;
+        /* BACKGROUND */
+
+        .background-shape {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
         }
+
+        .shape-one {
+            width: 420px;
+            height: 420px;
+            background: rgba(32, 133, 73, .06);
+            top: -190px;
+            right: -150px;
+        }
+
+        .shape-two {
+            width: 350px;
+            height: 350px;
+            background: rgba(18, 85, 46, .05);
+            bottom: -180px;
+            left: -140px;
+        }
+
+        /* PAGE */
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        /* CARD */
 
         .login-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 42px 38px 36px;
-            box-shadow: 0 20px 50px rgba(16, 37, 26, 0.10);
-            border: 1px solid #e7ece9;
+            background: var(--white);
+            border: 1px solid #e2e9e4;
+            border-radius: 22px;
+            padding: 42px 40px 32px;
+            box-shadow:
+                0 25px 60px rgba(7, 31, 19, .08),
+                0 4px 12px rgba(7, 31, 19, .03);
         }
+
+        /* BRAND */
 
         .brand {
             text-align: center;
             margin-bottom: 34px;
         }
 
-        .brand-name {
-            font-size: 34px;
+        .brand-mark {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 14px;
+            border-radius: 14px;
+            background: var(--green-900);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
             font-weight: 800;
-            letter-spacing: 3px;
-            color: #166534;
+            box-shadow: 0 8px 20px rgba(11, 43, 25, .16);
         }
 
-        .brand-line {
-            width: 42px;
-            height: 4px;
-            background: #166534;
-            border-radius: 10px;
-            margin: 10px auto 0;
+        .brand-name {
+            color: var(--green-800);
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 2px;
         }
 
-        .login-heading {
+        .brand-subtitle {
+            margin-top: 5px;
+            color: #89958e;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        /* HEADING */
+
+        .heading {
             text-align: center;
             margin-bottom: 28px;
         }
 
-        .login-heading h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #17221b;
-            margin-bottom: 8px;
+        .heading h1 {
+            color: var(--text);
+            font-size: 25px;
+            line-height: 1.2;
+            font-weight: 750;
+            letter-spacing: -.5px;
         }
 
-        .login-heading p {
-            font-size: 14px;
-            color: #718078;
+        .heading p {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
         }
+
+        /* ERROR */
+
+        .error-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--danger-bg);
+            border: 1px solid #f1cccc;
+            border-radius: 11px;
+            padding: 12px 13px;
+            margin-bottom: 20px;
+            color: var(--danger);
+            font-size: 12px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .error-icon {
+            flex-shrink: 0;
+            font-weight: 800;
+        }
+
+        /* FORM */
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 19px;
         }
 
         .form-group label {
             display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #34423a;
             margin-bottom: 8px;
+            color: #34423a;
+            font-size: 12px;
+            font-weight: 700;
         }
 
-        .input-wrapper input {
+        .input-container {
+            position: relative;
+        }
+
+        .input-container input {
             width: 100%;
-            height: 50px;
-            padding: 0 15px;
-            border: 1px solid #d8e0db;
-            border-radius: 10px;
+            height: 52px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
             background: #fbfcfb;
+            color: var(--text);
             font-family: inherit;
-            font-size: 14px;
-            color: #17221b;
+            font-size: 13px;
             outline: none;
-            transition: 0.2s ease;
+            transition: border-color .2s ease,
+                        box-shadow .2s ease,
+                        background .2s ease;
         }
 
-        .input-wrapper input:focus {
-            border-color: #166534;
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.10);
+        .input-container input:focus {
+            border-color: var(--green-600);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(32, 133, 73, .09);
         }
 
-        .input-wrapper input::placeholder {
+        .input-container input::placeholder {
             color: #a0aaa4;
         }
 
-        .error-message {
-            background: #fff3f3;
-            border: 1px solid #f2cccc;
-            color: #b42318;
-            border-radius: 9px;
-            padding: 11px 13px;
-            font-size: 13px;
-            margin-bottom: 20px;
+        /* PASSWORD */
+
+        .password-input {
+            padding-right: 76px !important;
         }
+
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+            color: var(--green-700);
+            padding: 7px 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .show-password:hover {
+            color: var(--green-900);
+        }
+
+        /* BUTTON */
 
         .login-button {
             width: 100%;
-            height: 50px;
-            border: none;
-            border-radius: 10px;
-            background: #166534;
-            color: #ffffff;
+            height: 52px;
+            margin-top: 5px;
+            border: 0;
+            border-radius: 11px;
+            background: var(--green-700);
+            color: white;
             font-family: inherit;
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .1px;
             cursor: pointer;
-            transition: 0.2s ease;
-            margin-top: 4px;
+            transition: background .2s ease,
+                        transform .2s ease,
+                        box-shadow .2s ease;
         }
 
         .login-button:hover {
-            background: #14532d;
+            background: var(--green-800);
             transform: translateY(-1px);
-            box-shadow: 0 7px 18px rgba(22, 101, 52, 0.20);
+            box-shadow: 0 9px 22px rgba(23, 107, 57, .20);
         }
 
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:focus-visible,
+        .show-password:focus-visible,
+        input:focus-visible {
+            outline: 3px solid rgba(32, 133, 73, .18);
+            outline-offset: 2px;
+        }
+
+        /* FOOTER */
+
         .footer {
-            text-align: center;
-            margin-top: 28px;
-            padding-top: 22px;
+            margin-top: 27px;
+            padding-top: 20px;
             border-top: 1px solid #edf1ee;
+            text-align: center;
         }
 
         .footer p {
-            font-size: 12px;
             color: #9aa49e;
+            font-size: 11px;
+            line-height: 1.5;
         }
 
-        @media (max-width: 480px) {
-            .login-wrapper {
-                padding: 16px;
+        .footer strong {
+            color: #718078;
+            font-weight: 700;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 520px) {
+            body {
+                padding: 18px 14px;
             }
 
             .login-card {
-                padding: 34px 24px 28px;
-                border-radius: 16px;
+                padding: 34px 24px 27px;
+                border-radius: 18px;
+            }
+
+            .brand {
+                margin-bottom: 29px;
+            }
+
+            .brand-mark {
+                width: 48px;
+                height: 48px;
+                border-radius: 13px;
+                font-size: 20px;
             }
 
             .brand-name {
-                font-size: 30px;
+                font-size: 27px;
+            }
+
+            .heading h1 {
+                font-size: 23px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                padding: 12px 10px;
+            }
+
+            .login-card {
+                padding: 28px 19px 23px;
+            }
+
+            .brand-name {
+                font-size: 25px;
+            }
+
+            .input-container input,
+            .login-button {
+                height: 50px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
             }
         }
     </style>
@@ -173,72 +367,167 @@
 
 <body>
 
-<div class="login-wrapper">
+<div class="background-shape shape-one"></div>
+<div class="background-shape shape-two"></div>
 
-    <div class="login-card">
+<main class="login-container">
+
+    <section class="login-card">
 
         <div class="brand">
-            <div class="brand-name">SARTIFY</div>
-            <div class="brand-line"></div>
+
+            <div class="brand-mark">
+                S
+            </div>
+
+            <div class="brand-name">
+                SARTIFY
+            </div>
+
+            <div class="brand-subtitle">
+                Food Management System
+            </div>
+
         </div>
 
-        <div class="login-heading">
-            <h1>Welcome Back</h1>
-            <p>Sign in to continue</p>
+
+        <div class="heading">
+
+            <h1>
+                Welcome Back
+            </h1>
+
+            <p>
+                Sign in to access your SARTIFY account.
+            </p>
+
         </div>
+
 
         {% if form.errors %}
+
         <div class="error-message">
-            Invalid username or password. Please try again.
+
+            <span class="error-icon">!</span>
+
+            <span>
+                Invalid username or password.
+                Please check your credentials and try again.
+            </span>
+
         </div>
+
         {% endif %}
 
+
         <form method="post">
+
             {% csrf_token %}
 
-            <div class="form-group">
-                <label for="id_username">Username</label>
 
-                <div class="input-wrapper">
+            <div class="form-group">
+
+                <label for="id_username">
+                    Username
+                </label>
+
+                <div class="input-container">
+
                     <input
                         type="text"
                         name="username"
                         id="id_username"
                         placeholder="Enter your username"
                         autocomplete="username"
+                        autocapitalize="none"
+                        spellcheck="false"
                         required
+                        autofocus
                     >
+
                 </div>
+
             </div>
 
-            <div class="form-group">
-                <label for="id_password">Password</label>
 
-                <div class="input-wrapper">
+            <div class="form-group">
+
+                <label for="id_password">
+                    Password
+                </label>
+
+                <div class="input-container">
+
                     <input
                         type="password"
                         name="password"
                         id="id_password"
+                        class="password-input"
                         placeholder="Enter your password"
                         autocomplete="current-password"
                         required
                     >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        id="togglePassword"
+                        aria-label="Show password"
+                    >
+                        Show
+                    </button>
+
                 </div>
+
             </div>
 
-            <button type="submit" class="login-button">
+
+            <button
+                type="submit"
+                class="login-button"
+            >
                 Sign In
             </button>
 
         </form>
 
+
         <div class="footer">
-            <p>SARTIFY</p>
+
+            <p>
+                © 2026 <strong>SARTIFY</strong>.
+                All rights reserved.
+            </p>
+
         </div>
 
-    </div>
+    </section>
 
-</div>
+</main>
+
+
+<script>
+    const passwordInput = document.getElementById("id_password");
+    const togglePassword = document.getElementById("togglePassword");
+
+    togglePassword.addEventListener("click", function () {
+
+        const isPassword =
+            passwordInput.type === "password";
+
+        passwordInput.type =
+            isPassword ? "text" : "password";
+
+        togglePassword.textContent =
+            isPassword ? "Hide" : "Show";
+
+        togglePassword.setAttribute(
+            "aria-label",
+            isPassword ? "Hide password" : "Show password"
+        );
+
+    });
+</script>
 
 </body>
 </html>

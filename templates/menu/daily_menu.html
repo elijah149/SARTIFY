@@ -1,304 +1,507 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Daily Meals</title>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+    <title>SARTIFY | Daily Meals</title>
 
     <style>
+        :root {
+            --green-950: #082014;
+            --green-900: #0d2b1b;
+            --green-800: #155b32;
+            --green-700: #1d7541;
+            --green-600: #258c4d;
+            --green-100: #e7f5eb;
+            --green-50: #f4faf6;
+            --text: #17231c;
+            --muted: #6b776f;
+            --border: #dce6df;
+            --bg: #f5f8f6;
+            --white: #ffffff;
+            --danger: #b42318;
+            --danger-bg: #fff1f0;
+            --shadow: 0 8px 28px rgba(8, 32, 20, .07);
+            --radius: 16px;
+        }
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            font-family: "Inter", sans-serif;
-            background: #f5f7f6;
-            color: #17231c;
-        }
-
-        .layout {
-            display: flex;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
         }
 
-        /* SIDEBAR */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        /* ================= SIDEBAR ================= */
 
         .sidebar {
-            width: 235px;
-            background: #10251a;
-            color: white;
-            padding: 24px 16px;
             position: fixed;
             inset: 0 auto 0 0;
+            width: 248px;
+            background: var(--green-950);
+            color: white;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
         }
 
-        .logo {
-            font-size: 19px;
-            font-weight: 700;
-            padding: 0 12px 32px;
+        .brand {
+            padding: 8px 12px 30px;
         }
 
-        .nav-title {
-            color: #82938a;
-            font-size: 10px;
+        .brand-name {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -.7px;
+        }
+
+        .brand-subtitle {
+            margin-top: 5px;
+            color: #9eb4a5;
+            font-size: 11px;
             font-weight: 700;
+            letter-spacing: .7px;
             text-transform: uppercase;
-            letter-spacing: .8px;
-            margin: 20px 12px 8px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .nav a {
-            display: block;
-            color: #dce8e0;
-            text-decoration: none;
-            padding: 11px 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 11px;
+            color: #c8d7cd;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s ease;
         }
 
         .nav a:hover,
         .nav a.active {
-            background: #166534;
+            background: rgba(255,255,255,.09);
             color: white;
         }
 
-        /* MAIN */
-
-        .main {
-            margin-left: 235px;
-            width: calc(100% - 235px);
-            padding: 32px;
-        }
-
-        .header {
-            margin-bottom: 25px;
-        }
-
-        .header h1 {
-            margin: 0 0 7px;
-            font-size: 27px;
-        }
-
-        .header p {
-            margin: 0;
-            color: #718078;
-            font-size: 13px;
-        }
-
-        /* MESSAGES */
-
-        .messages {
-            margin-bottom: 20px;
-        }
-
-        .message {
-            background: white;
-            border-left: 4px solid #166534;
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            font-size: 12px;
-            border-top: 1px solid #e1e9e4;
-            border-right: 1px solid #e1e9e4;
-            border-bottom: 1px solid #e1e9e4;
-        }
-
-        /* DAYS */
-
-        .days {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .day-card {
-            background: white;
-            border: 1px solid #e0e8e3;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 3px 12px rgba(16, 37, 26, .05);
-        }
-
-        .day-header {
-            background: #10251a;
-            color: white;
-            padding: 17px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .day-header h2 {
-            margin: 0;
+        .nav-icon {
+            width: 20px;
+            text-align: center;
             font-size: 16px;
         }
 
-        .day-label {
-            background: #166534;
-            padding: 5px 9px;
-            border-radius: 6px;
-            font-size: 9px;
-            font-weight: 700;
+        .sidebar-bottom {
+            margin-top: auto;
         }
 
-        .day-body {
+        .logout {
+            color: #ffb8b0 !important;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 248px;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+
+        .title h1 {
+            font-size: 30px;
+            line-height: 1.15;
+            letter-spacing: -.8px;
+        }
+
+        .title p {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .back-btn {
+            border: 1px solid var(--border);
+            background: white;
+            padding: 11px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            border-color: var(--green-600);
+            color: var(--green-700);
+        }
+
+        /* ================= MESSAGES ================= */
+
+        .messages {
+            margin-bottom: 18px;
+        }
+
+        .message {
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            background: var(--green-100);
+            color: var(--green-800);
+            border: 1px solid #cbe5d2;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ================= WEEK ================= */
+
+        .week-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .week-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .week-header h2 {
+            font-size: 17px;
+        }
+
+        .week-header span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* ================= DAYS ================= */
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 16px;
             padding: 20px;
         }
 
-        .meal-section {
-            margin-bottom: 24px;
+        .day-card {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #fbfdfb;
+            overflow: hidden;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
         }
 
-        .meal-section:last-child {
+        .day-head {
+            background: var(--green-900);
+            color: white;
+            padding: 15px;
+        }
+
+        .day-name {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .day-number {
+            margin-top: 4px;
+            color: #b8cbbd;
+            font-size: 12px;
+        }
+
+        .day-body {
+            padding: 16px;
+            flex: 1;
+        }
+
+        /* ================= SECTIONS ================= */
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section:last-child {
             margin-bottom: 0;
         }
 
-        .section-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: #59675f;
+        .section-label {
+            margin-bottom: 9px;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: .7px;
-            margin-bottom: 10px;
         }
-
-        /* ITEMS */
 
         .items {
             display: flex;
             flex-direction: column;
             gap: 7px;
+            margin-bottom: 11px;
         }
 
         .item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #f3f7f4;
-            border: 1px solid #dce7e0;
-            border-radius: 8px;
-            padding: 9px 11px;
+            gap: 8px;
+            padding: 8px 9px;
+            background: var(--green-100);
+            border: 1px solid #d5eadd;
+            border-radius: 9px;
         }
 
         .item-name {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #285039;
-        }
-
-        .dot {
-            width: 7px;
-            height: 7px;
-            background: #166534;
-            border-radius: 50%;
-        }
-
-        .delete-btn {
-            border: none;
-            background: #fff1ed;
-            color: #c2410c;
-            border-radius: 6px;
-            padding: 6px 9px;
-            font-size: 10px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .delete-btn:hover {
-            background: #ffddd2;
-        }
-
-        /* ADD FORM */
-
-        .add-form {
-            display: flex;
-            gap: 7px;
-            margin-top: 10px;
-        }
-
-        .add-form input {
-            flex: 1;
             min-width: 0;
-            border: 1px solid #d5ded8;
-            border-radius: 7px;
-            padding: 9px 10px;
-            font-family: "Inter", sans-serif;
-            font-size: 11px;
-            outline: none;
-        }
-
-        .add-form input:focus {
-            border-color: #166534;
-        }
-
-        .add-btn {
-            border: none;
-            background: #166534;
-            color: white;
-            border-radius: 7px;
-            padding: 9px 12px;
-            font-family: "Inter", sans-serif;
-            font-size: 10px;
+            color: var(--green-800);
+            font-size: 12px;
             font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
+            overflow-wrap: anywhere;
         }
 
-        .add-btn:hover {
-            background: #14532d;
+        .remove-form {
+            flex-shrink: 0;
+        }
+
+        .remove-btn {
+            border: 0;
+            background: transparent;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px;
+        }
+
+        .remove-btn:hover {
+            text-decoration: underline;
         }
 
         .empty {
-            padding: 10px 12px;
-            border: 1px dashed #d5ded8;
-            border-radius: 8px;
-            color: #89948d;
-            font-size: 11px;
+            color: #89958e;
+            font-size: 12px;
+            margin-bottom: 11px;
         }
 
-        /* RESPONSIVE */
+        /* ================= ADD FORM ================= */
 
-        @media (max-width: 900px) {
+        .add-form {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .add-form input {
+            min-width: 0;
+            flex: 1;
+            width: 100%;
+            padding: 9px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            color: var(--text);
+            outline: none;
+            font-size: 12px;
+        }
+
+        .add-form input:focus {
+            border-color: var(--green-600);
+            box-shadow: 0 0 0 3px rgba(37, 140, 77, .10);
+        }
+
+        .add-btn {
+            flex-shrink: 0;
+            border: 0;
+            border-radius: 8px;
+            padding: 9px 11px;
+            background: var(--green-700);
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .add-btn:hover {
+            background: var(--green-800);
+        }
+
+        /* ================= FOOTER ACTION ================= */
+
+        .day-footer {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            background: white;
+        }
+
+        .manage-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 9px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--green-700);
+            font-size: 12px;
+            font-weight: 800;
+            transition: .2s ease;
+        }
+
+        .manage-link:hover {
+            background: var(--green-50);
+            border-color: var(--green-600);
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1250px) {
+            .days {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 950px) {
             .sidebar {
-                width: 200px;
+                position: relative;
+                width: 100%;
+                min-height: auto;
+                padding: 15px;
+            }
+
+            .brand {
+                padding: 5px 8px 15px;
+            }
+
+            .nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .nav a {
+                flex: 1 1 auto;
+            }
+
+            .sidebar-bottom {
+                margin-top: 8px;
             }
 
             .main {
-                margin-left: 200px;
-                width: calc(100% - 200px);
+                margin-left: 0;
                 padding: 22px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .topbar {
+                flex-direction: column;
+            }
+
+            .title h1 {
+                font-size: 25px;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .days {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                padding: 14px;
+                gap: 12px;
+            }
+
+            .week-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .main {
+                padding: 15px;
+            }
+
+            .nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .days {
                 grid-template-columns: 1fr;
             }
+
+            .day-head {
+                padding: 14px;
+            }
+
+            .day-body {
+                padding: 14px;
+            }
         }
 
-        @media (max-width: 600px) {
-            .layout {
-                display: block;
+        @media (max-width: 360px) {
+            .nav {
+                grid-template-columns: 1fr;
             }
 
-            .sidebar {
-                position: relative;
-                width: 100%;
+            .add-form {
+                flex-direction: column;
             }
 
-            .main {
-                margin-left: 0;
+            .add-btn {
                 width: 100%;
-                padding: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                scroll-behavior: auto !important;
+                transition: none !important;
             }
         }
     </style>
@@ -306,136 +509,128 @@
 
 <body>
 
-<div class="layout">
+<aside class="sidebar">
 
-    <!-- SIDEBAR -->
+    <div class="brand">
+        <div class="brand-name">SARTIFY</div>
+        <div class="brand-subtitle">Admin Portal</div>
+    </div>
 
-    <aside class="sidebar">
+    <nav class="nav">
 
-        <div class="logo">
-            Food Management
+        <a href="{% url 'admin_dashboard' %}">
+            <span class="nav-icon">⌂</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="{% url 'users_list' %}">
+            <span class="nav-icon">♙</span>
+            <span>Users</span>
+        </a>
+
+        <a href="{% url 'daily_menu' %}" class="active">
+            <span class="nav-icon">▦</span>
+            <span>Daily Meals</span>
+        </a>
+
+        <a href="{% url 'admin_orders' %}">
+            <span class="nav-icon">☷</span>
+            <span>Orders</span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+        <nav class="nav">
+            <a href="{% url 'logout' %}" class="logout">
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div class="title">
+            <h1>Daily Meals</h1>
+            <p>Manage the food and sides available for each weekday.</p>
         </div>
 
-        <div class="nav">
+        <a href="{% url 'admin_dashboard' %}" class="back-btn">
+            ← Back to Dashboard
+        </a>
 
-            <div class="nav-title">
-                Main
+    </div>
+
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
             </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-            <a href="{% url 'admin_dashboard' %}">
-                Dashboard
-            </a>
 
-            <div class="nav-title">
-                Management
-            </div>
+    <section class="week-card">
 
-            <a href="{% url 'users_list' %}">
-                Users
-            </a>
-
-            <a href="{% url 'daily_menu' %}" class="active">
-                Daily Meals
-            </a>
-
-            <a href="{% url 'admin_orders' %}">
-                Orders
-            </a>
-
-            <div class="nav-title">
-                Account
-            </div>
-
-            <a href="{% url 'logout' %}">
-                Logout
-            </a>
-
+        <div class="week-header">
+            <h2>Monday – Friday Menu</h2>
+            <span>Configure each day's available meals</span>
         </div>
-
-    </aside>
-
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-        <div class="header">
-
-            <h1>
-                Daily Meals
-            </h1>
-
-            <p>
-                Add or remove foods and sides for each day.
-            </p>
-
-        </div>
-
-
-        {% if messages %}
-
-        <div class="messages">
-
-            {% for message in messages %}
-
-                <div class="message">
-                    {{ message }}
-                </div>
-
-            {% endfor %}
-
-        </div>
-
-        {% endif %}
 
 
         <div class="days">
 
             {% for day in days %}
 
-            <div class="day-card">
+            <article class="day-card">
 
-                <div class="day-header">
-
-                    <h2>
+                <div class="day-head">
+                    <div class="day-name">
                         {{ day.name }}
-                    </h2>
+                    </div>
 
-                    <span class="day-label">
-                        DAY {{ day.number|add:"1" }}
-                    </span>
-
+                    <div class="day-number">
+                        Weekday {{ day.number|add:"1" }}
+                    </div>
                 </div>
 
 
                 <div class="day-body">
 
-                    <!-- FOODS -->
+                    <!-- FOOD -->
 
-                    <div class="meal-section">
+                    <div class="section">
 
-                        <div class="section-title">
-                            Foods
+                        <div class="section-label">
+                            Food
                         </div>
 
-                        <div class="items">
+                        {% if day.menu and day.menu.foods.all %}
 
-                            {% if day.menu %}
+                            <div class="items">
 
                                 {% for food in day.menu.foods.all %}
 
                                 <div class="item">
 
-                                    <div class="item-name">
-                                        <span class="dot"></span>
+                                    <span class="item-name">
                                         {{ food.name }}
-                                    </div>
+                                    </span>
 
                                     <form
                                         method="post"
                                         action="{% url 'manage_daily_meal' day.number %}"
+                                        class="remove-form"
                                     >
-
                                         {% csrf_token %}
 
                                         <input
@@ -452,32 +647,27 @@
 
                                         <button
                                             type="submit"
-                                            class="delete-btn"
+                                            class="remove-btn"
+                                            onclick="return confirm('Remove {{ food.name }} from {{ day.name }}?')"
                                         >
-                                            Delete
+                                            Remove
                                         </button>
 
                                     </form>
 
                                 </div>
 
-                                {% empty %}
-
-                                <div class="empty">
-                                    No food added.
-                                </div>
-
                                 {% endfor %}
 
-                            {% else %}
+                            </div>
 
-                                <div class="empty">
-                                    No food added.
-                                </div>
+                        {% else %}
 
-                            {% endif %}
+                            <div class="empty">
+                                No food added yet.
+                            </div>
 
-                        </div>
+                        {% endif %}
 
 
                         <form
@@ -497,7 +687,8 @@
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="Enter food name"
+                                placeholder="Add food..."
+                                maxlength="100"
                                 required
                             >
 
@@ -505,7 +696,7 @@
                                 type="submit"
                                 class="add-btn"
                             >
-                                + Add Food
+                                + Food
                             </button>
 
                         </form>
@@ -515,30 +706,29 @@
 
                     <!-- SIDES -->
 
-                    <div class="meal-section">
+                    <div class="section">
 
-                        <div class="section-title">
-                            Sides
+                        <div class="section-label">
+                            Sides / Vegetables
                         </div>
 
-                        <div class="items">
+                        {% if day.menu and day.menu.vegetables.all %}
 
-                            {% if day.menu %}
+                            <div class="items">
 
                                 {% for side in day.menu.vegetables.all %}
 
                                 <div class="item">
 
-                                    <div class="item-name">
-                                        <span class="dot"></span>
+                                    <span class="item-name">
                                         {{ side.name }}
-                                    </div>
+                                    </span>
 
                                     <form
                                         method="post"
                                         action="{% url 'manage_daily_meal' day.number %}"
+                                        class="remove-form"
                                     >
-
                                         {% csrf_token %}
 
                                         <input
@@ -555,32 +745,27 @@
 
                                         <button
                                             type="submit"
-                                            class="delete-btn"
+                                            class="remove-btn"
+                                            onclick="return confirm('Remove {{ side.name }} from {{ day.name }}?')"
                                         >
-                                            Delete
+                                            Remove
                                         </button>
 
                                     </form>
 
                                 </div>
 
-                                {% empty %}
-
-                                <div class="empty">
-                                    No side added.
-                                </div>
-
                                 {% endfor %}
 
-                            {% else %}
+                            </div>
 
-                                <div class="empty">
-                                    No side added.
-                                </div>
+                        {% else %}
 
-                            {% endif %}
+                            <div class="empty">
+                                No side added yet.
+                            </div>
 
-                        </div>
+                        {% endif %}
 
 
                         <form
@@ -600,7 +785,8 @@
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="Enter side name"
+                                placeholder="Add side..."
+                                maxlength="100"
                                 required
                             >
 
@@ -608,7 +794,7 @@
                                 type="submit"
                                 class="add-btn"
                             >
-                                + Add Side
+                                + Side
                             </button>
 
                         </form>
@@ -617,15 +803,27 @@
 
                 </div>
 
-            </div>
+
+                <div class="day-footer">
+
+                    <a
+                        href="{% url 'edit_daily_menu' day.number %}"
+                        class="manage-link"
+                    >
+                        Edit Full Menu
+                    </a>
+
+                </div>
+
+            </article>
 
             {% endfor %}
 
         </div>
 
-    </main>
+    </section>
 
-</div>
+</main>
 
 </body>
 </html>
