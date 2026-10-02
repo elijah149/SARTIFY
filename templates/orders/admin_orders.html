@@ -451,6 +451,23 @@
     }
 }
 
+
+        th small {
+            display: block;
+            margin-top: 5px;
+            color: #A8A8A8;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        th > div {
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
 </style>
 </head>
 
@@ -560,7 +577,8 @@
                         {% for day in days %}
 
                         <th>
-                            {{ day }}
+                            <div>{{ day.name }}</div>
+                            <small>{{ day.formatted_date }}</small>
                         </th>
 
                         {% endfor %}
@@ -587,22 +605,12 @@
 
                         <td>
 
-                            {% if user|dictsort:day %}
-
-                                {% if user.Monday %}
-                                {% endif %}
-
-                            {% endif %}
-
-
-                            {% if day == "Monday" %}
+                            {% if day.name == "Monday" %}
                                 {% with meals=user.Monday %}
                                     {% if meals %}
                                         <div class="meal-list">
                                             {% for meal in meals %}
-                                                <span class="meal {% if 'Cancelled' in meal %}cancelled{% endif %}">
-                                                    {{ meal }}
-                                                </span>
+                                                <span class="meal">{{ meal }}</span>
                                             {% endfor %}
                                         </div>
                                     {% else %}
@@ -610,14 +618,12 @@
                                     {% endif %}
                                 {% endwith %}
 
-                            {% elif day == "Tuesday" %}
+                            {% elif day.name == "Tuesday" %}
                                 {% with meals=user.Tuesday %}
                                     {% if meals %}
                                         <div class="meal-list">
                                             {% for meal in meals %}
-                                                <span class="meal {% if 'Cancelled' in meal %}cancelled{% endif %}">
-                                                    {{ meal }}
-                                                </span>
+                                                <span class="meal">{{ meal }}</span>
                                             {% endfor %}
                                         </div>
                                     {% else %}
@@ -625,14 +631,12 @@
                                     {% endif %}
                                 {% endwith %}
 
-                            {% elif day == "Wednesday" %}
+                            {% elif day.name == "Wednesday" %}
                                 {% with meals=user.Wednesday %}
                                     {% if meals %}
                                         <div class="meal-list">
                                             {% for meal in meals %}
-                                                <span class="meal {% if 'Cancelled' in meal %}cancelled{% endif %}">
-                                                    {{ meal }}
-                                                </span>
+                                                <span class="meal">{{ meal }}</span>
                                             {% endfor %}
                                         </div>
                                     {% else %}
@@ -640,14 +644,12 @@
                                     {% endif %}
                                 {% endwith %}
 
-                            {% elif day == "Thursday" %}
+                            {% elif day.name == "Thursday" %}
                                 {% with meals=user.Thursday %}
                                     {% if meals %}
                                         <div class="meal-list">
                                             {% for meal in meals %}
-                                                <span class="meal {% if 'Cancelled' in meal %}cancelled{% endif %}">
-                                                    {{ meal }}
-                                                </span>
+                                                <span class="meal">{{ meal }}</span>
                                             {% endfor %}
                                         </div>
                                     {% else %}
@@ -655,20 +657,19 @@
                                     {% endif %}
                                 {% endwith %}
 
-                            {% elif day == "Friday" %}
+                            {% elif day.name == "Friday" %}
                                 {% with meals=user.Friday %}
                                     {% if meals %}
                                         <div class="meal-list">
                                             {% for meal in meals %}
-                                                <span class="meal {% if 'Cancelled' in meal %}cancelled{% endif %}">
-                                                    {{ meal }}
-                                                </span>
+                                                <span class="meal">{{ meal }}</span>
                                             {% endfor %}
                                         </div>
                                     {% else %}
                                         <span class="empty">—</span>
                                     {% endif %}
                                 {% endwith %}
+
                             {% endif %}
 
                         </td>
@@ -682,7 +683,7 @@
                     <tr>
                         <td colspan="6">
                             <span class="empty">
-                                No orders have been placed yet.
+                                No orders have been placed for this week.
                             </span>
                         </td>
                     </tr>
@@ -694,6 +695,7 @@
             </table>
 
         </div>
+
 
     </section>
 

@@ -215,9 +215,15 @@ def admin_orders(request):
         )
         return redirect("dashboard")
 
-    # Show only active orders.
-    # Cancelled orders are never shown.
+    # Current working week: Monday to Friday
+    today = date.today()
+    monday = today - timedelta(days=today.weekday())
+    friday = monday + timedelta(days=4)
+
+    # Show only active orders from the current Monday-Friday week.
+    # Older orders remain safely stored in the database.
     orders = Order.objects.filter(
+        order_date__range=(monday, friday),
         status__in=[
             "pending",
             "confirmed",
@@ -267,12 +273,16 @@ def admin_orders(request):
         key=lambda user: user["username"].lower()
     )
 
+    # Current week's Monday-Friday dates
     days = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
+        {
+            "name": (monday + timedelta(days=i)).strftime("%A"),
+            "date": monday + timedelta(days=i),
+            "formatted_date": (
+                monday + timedelta(days=i)
+            ).strftime("%d %B %Y"),
+        }
+        for i in range(5)
     ]
 
     return render(
@@ -281,5 +291,7 @@ def admin_orders(request):
         {
             "users": users,
             "days": days,
+            "monday": monday,
+            "friday": friday,
         }
     )
