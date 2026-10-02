@@ -10,14 +10,14 @@
 
     <style>
         :root {
-            --green: #0f6b45;
-            --green-dark: #084b32;
-            --green-light: #eaf7f1;
-            --white: #ffffff;
-            --bg: #f5f7f6;
-            --text: #17231e;
-            --muted: #6b7771;
-            --border: #dfe7e3;
+            --green: #4285F4;
+            --green-dark: #2F6FDB;
+            --green-light: rgba(66, 133, 244, 0.14);
+            --white: #303030;
+            --bg: #000000;
+            --text: #FFFFFF;
+            --muted: #A8A8A8;
+            --border: #444444;
             --danger: #c0392b;
             --shadow: 0 10px 30px rgba(15, 107, 69, 0.08);
         }
@@ -81,7 +81,7 @@
             height: 42px;
             border-radius: 12px;
             background: var(--green);
-            color: white;
+            color: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -112,7 +112,7 @@
             gap: 13px;
             padding: 13px 14px;
             border-radius: 10px;
-            color: #53615b;
+            color: #BDBDBD;
             font-size: 14px;
             font-weight: 600;
             transition: .2s ease;
@@ -138,11 +138,11 @@
         }
 
         .logout a {
-            color: #7b504c;
+            color: #FF8A80;
         }
 
         .logout a:hover {
-            background: #fff1ef;
+            background: rgba(255, 92, 92, 0.12);
             color: var(--danger);
         }
 
@@ -199,7 +199,7 @@
 
         .day-card {
             background: var(--green);
-            color: white;
+            color: #FFFFFF;
             border-radius: 16px;
             padding: 22px 25px;
             margin-bottom: 20px;
@@ -321,7 +321,7 @@
         .cancel-button {
             border: 1px solid var(--border);
             background: white;
-            color: #53615b;
+            color: #BDBDBD;
         }
 
         .cancel-button:hover {
@@ -331,7 +331,7 @@
         .submit-button {
             border: none;
             background: var(--green);
-            color: white;
+            color: #FFFFFF;
         }
 
         .submit-button:hover {
@@ -454,7 +454,64 @@
                 transition: none !important;
             }
         }
-    </style>
+    
+        /* SARTIFY: readable form fields and dropdown options */
+        input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+        textarea,
+        select {
+            background-color: #303030 !important;
+            color: #FFFFFF !important;
+            border-color: #555555 !important;
+            color-scheme: dark;
+        }
+
+        select option,
+        select optgroup {
+            background-color: #303030 !important;
+            color: #FFFFFF !important;
+        }
+
+        select option:checked {
+            background-color: #4285F4 !important;
+            color: #FFFFFF !important;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #A8A8A8 !important;
+            opacity: 1;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #4285F4 !important;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.25);
+        }
+
+    
+/* SARTIFY logo */
+.brand {
+    display: flex;
+    align-items: center;
+}
+.sartify-logo {
+    display: block;
+    width: 175px;
+    max-width: 100%;
+    height: 48px;
+    object-fit: contain;
+    object-position: left center;
+}
+@media (max-width: 600px) {
+    .sartify-logo {
+        width: 145px;
+        height: 42px;
+    }
+}
+
+</style>
 </head>
 
 <body>
@@ -466,17 +523,10 @@
     <aside class="sidebar">
 
         <div class="brand">
-
-            <div class="brand-logo">
-                S
-            </div>
-
-            <div class="brand-text">
-                <strong>SARTIFY</strong>
-                <span>Food Management</span>
-            </div>
-
-        </div>
+    <img src="{% static 'images/sartify-logo-white.png' %}"
+         class="sartify-logo"
+         alt="SARTIFY logo">
+</div>
 
 
         <nav class="nav">

@@ -1,0 +1,195 @@
+:root {
+    --primary: #4285F4 !important;
+    --primary-dark: #2F6FDB !important;
+    --primary-soft: rgba(66, 133, 244, 0.14) !important;
+
+    --sidebar: #000000 !important;
+    --sidebar-hover: #303030 !important;
+
+    --text: #FFFFFF !important;
+    --muted: #A8A8A8 !important;
+    --border: #303030 !important;
+    --background: #000000 !important;
+    --white: #303030 !important;
+
+    --danger: #FF5C5C !important;
+    --danger-soft: rgba(255, 92, 92, 0.12) !important;
+
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+body {
+    background: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+.sidebar {
+    background: #000000 !important;
+    border-right: 1px solid #303030;
+}
+
+.nav a {
+    color: #BDBDBD !important;
+}
+
+.nav a:hover {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+}
+
+.nav a.active {
+    background: #4285F4 !important;
+    color: #FFFFFF !important;
+}
+
+.brand-mark {
+    background: #4285F4 !important;
+    color: #FFFFFF !important;
+}
+
+.brand-text span {
+    color: #4285F4 !important;
+}
+
+.main {
+    background: #000000 !important;
+}
+
+.profile-chip,
+.day-card,
+.orders-card {
+    background: #303030 !important;
+    border-color: #444444 !important;
+}
+
+.profile-avatar {
+    background: rgba(66, 133, 244, 0.15) !important;
+    color: #4285F4 !important;
+}
+
+.welcome h1,
+.section-heading h2,
+.day-title h3,
+.orders-card-header h3 {
+    color: #FFFFFF !important;
+}
+
+.welcome p,
+.section-heading p,
+.week-range,
+.profile-info span,
+.day-title p,
+.empty,
+.no-menu,
+.orders-card-header span {
+    color: #A8A8A8 !important;
+}
+
+.day-title {
+    border-bottom-color: #444444 !important;
+}
+
+.section-title {
+    color: #BDBDBD !important;
+}
+
+.food {
+    background: rgba(66, 133, 244, 0.14) !important;
+    color: #6FA3FF !important;
+}
+
+.side {
+    background: #444444 !important;
+    color: #FFFFFF !important;
+}
+
+.order-btn {
+    background: #4285F4 !important;
+    color: #FFFFFF !important;
+}
+
+.order-btn:hover {
+    background: #2F6FDB !important;
+}
+
+.ordered {
+    background: #444444 !important;
+    color: #BDBDBD !important;
+    border-color: #555555 !important;
+}
+
+.orders-card-header {
+    border-bottom-color: #444444 !important;
+}
+
+th {
+    background: #242424 !important;
+    color: #A8A8A8 !important;
+}
+
+td {
+    border-top-color: #444444 !important;
+    color: #FFFFFF !important;
+}
+
+tbody tr:hover {
+    background: #383838 !important;
+}
+
+.status {
+    background: rgba(66, 133, 244, 0.14) !important;
+    color: #6FA3FF !important;
+}
+
+.empty-orders-icon {
+    background: #444444 !important;
+    color: #A8A8A8 !important;
+}
+
+.message {
+    background: rgba(66, 133, 244, 0.12) !important;
+    border-color: rgba(66, 133, 244, 0.35) !important;
+    color: #6FA3FF !important;
+}
+
+.cancel-btn {
+    background: rgba(255, 92, 92, 0.12) !important;
+    color: #FF7B7B !important;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 92, 92, 0.22) !important;
+}
+
+tbody tr {
+    border-color: #444444 !important;
+}
+
+@media (max-width: 620px) {
+    tbody tr {
+        background: #303030 !important;
+        border-color: #444444 !important;
+    }
+
+    tbody tr:hover {
+        background: #383838 !important;
+    }
+}
+
+.sartify-logo {
+    display: block !important;
+    width: 180px !important;
+    height: 55px !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+@media (max-width: 620px) {
+    .sartify-logo {
+        width: 150px !important;
+        height: 48px !important;
+    }
+}

@@ -12,3 +12,10 @@ __pycache__/
 # Local AI/agent tooling
 .agents/
 skills-lock.json
+
+# Generated deployment/static files
+staticfiles/
+
+# Local backup files
+*.backup
+*.patch

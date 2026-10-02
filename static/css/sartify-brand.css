@@ -1,0 +1,610 @@
+:root {
+    --primary: #4285F4 !important;
+    --primary-dark: #2F6FDB !important;
+    --primary-soft: rgba(66, 133, 244, 0.14) !important;
+
+    --sidebar: #000000 !important;
+    --sidebar-hover: #303030 !important;
+
+    --text: #FFFFFF !important;
+    --muted: #A8A8A8 !important;
+    --border: #303030 !important;
+    --background: #000000 !important;
+    --white: #303030 !important;
+
+    --danger: #FF5C5C !important;
+    --danger-soft: rgba(255, 92, 92, 0.12) !important;
+
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+body {
+    background: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+.sidebar {
+    background: #000000 !important;
+    border-right: 1px solid #303030;
+}
+
+.nav a {
+    color: #BDBDBD !important;
+}
+
+.nav a:hover {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+}
+
+.nav a.active {
+    background: #4285F4 !important;
+    color: #FFFFFF !important;
+}
+
+.brand-mark {
+    background: #4285F4 !important;
+    color: #FFFFFF !important;
+}
+
+.brand-text span {
+    color: #4285F4 !important;
+}
+
+.main {
+    background: #000000 !important;
+}
+
+.profile-chip,
+.day-card,
+.orders-card {
+    background: #303030 !important;
+    border-color: #444444 !important;
+}
+
+.profile-avatar {
+    background: rgba(66, 133, 244, 0.15) !important;
+    color: #4285F4 !important;
+}
+
+.welcome h1,
+.section-heading h2,
+.day-title h3,
+.orders-card-header h3 {
+    color: #FFFFFF !important;
+}
+
+.welcome p,
+.section-heading p,
+.week-range,
+.profile-info span,
+.day-title p,
+.empty,
+.no-menu,
+.orders-card-header span {
+    color: #A8A8A8 !important;
+}
+
+.day-title {
+    border-bottom-color: #444444 !important;
+}
+
+.section-title {
+    color: #BDBDBD !important;
+}
+
+.food {
+    background: rgba(66, 133, 244, 0.14) !important;
+    color: #6FA3FF !important;
+}
+
+.side {
+    background: #444444 !important;
+    color: #FFFFFF !important;
+}
+
+.order-btn {
+    background: #4285F4 !important;
+    color: #FFFFFF !important;
+}
+
+.order-btn:hover {
+    background: #2F6FDB !important;
+}
+
+.ordered {
+    background: #444444 !important;
+    color: #BDBDBD !important;
+    border-color: #555555 !important;
+}
+
+.orders-card-header {
+    border-bottom-color: #444444 !important;
+}
+
+th {
+    background: #242424 !important;
+    color: #A8A8A8 !important;
+}
+
+td {
+    border-top-color: #444444 !important;
+    color: #FFFFFF !important;
+}
+
+tbody tr:hover {
+    background: #383838 !important;
+}
+
+.status {
+    background: rgba(66, 133, 244, 0.14) !important;
+    color: #6FA3FF !important;
+}
+
+.empty-orders-icon {
+    background: #444444 !important;
+    color: #A8A8A8 !important;
+}
+
+.message {
+    background: rgba(66, 133, 244, 0.12) !important;
+    border-color: rgba(66, 133, 244, 0.35) !important;
+    color: #6FA3FF !important;
+}
+
+.cancel-btn {
+    background: rgba(255, 92, 92, 0.12) !important;
+    color: #FF7B7B !important;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 92, 92, 0.22) !important;
+}
+
+tbody tr {
+    border-color: #444444 !important;
+}
+
+@media (max-width: 620px) {
+    tbody tr {
+        background: #303030 !important;
+        border-color: #444444 !important;
+    }
+
+    tbody tr:hover {
+        background: #383838 !important;
+    }
+}
+
+.sartify-logo {
+    display: block !important;
+    width: 180px !important;
+    height: 55px !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+@media (max-width: 620px) {
+    .sartify-logo {
+        width: 150px !important;
+        height: 48px !important;
+    }
+}
+
+/* =========================================================
+   SARTIFY DARK THEME — TEXT VISIBILITY FIX
+   ========================================================= */
+
+/* General table text */
+table,
+thead,
+tbody,
+tr,
+th,
+td {
+    color: #FFFFFF !important;
+}
+
+/* Table headers */
+th {
+    background: #242424 !important;
+    color: #FFFFFF !important;
+}
+
+/* Table cells */
+td {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+    border-top-color: #444444 !important;
+}
+
+/* Table rows */
+tbody tr {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+}
+
+tbody tr:hover {
+    background: #383838 !important;
+}
+
+/* My Orders / order information */
+.orders-card,
+.orders-card table,
+.orders-card tbody,
+.orders-card tr,
+.orders-card td,
+.orders-card th {
+    color: #FFFFFF !important;
+}
+
+.orders-card td,
+.orders-card tbody tr {
+    background: #303030 !important;
+}
+
+/* Food and side names */
+.food,
+.side {
+    color: #FFFFFF !important;
+}
+
+/* Dates and normal order text */
+.order-date,
+.date,
+.order-info,
+.order-details,
+.food-name,
+.side-name {
+    color: #FFFFFF !important;
+}
+
+/* Admin Quick Access */
+.quick-access {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+}
+
+.quick-access h3,
+.quick-access h4,
+.quick-access p,
+.quick-access span,
+.quick-access a,
+.quick-access button {
+    color: #FFFFFF !important;
+}
+
+.quick-access a {
+    background: #242424 !important;
+}
+
+.quick-access a:hover {
+    background: #383838 !important;
+    color: #FFFFFF !important;
+}
+
+/* Admin Users */
+.users-card,
+.users-card table,
+.users-card tbody,
+.users-card tr,
+.users-card td,
+.users-card th {
+    color: #FFFFFF !important;
+}
+
+.users-card td,
+.users-card tbody tr {
+    background: #303030 !important;
+}
+
+.users-card th {
+    background: #242424 !important;
+    color: #FFFFFF !important;
+}
+
+/* Common user/admin text */
+.user-name,
+.username,
+.email,
+.role,
+.status,
+.created-at {
+    color: #FFFFFF !important;
+}
+
+/* Form/table labels */
+label {
+    color: #FFFFFF !important;
+}
+
+/* Links should remain readable */
+table a {
+    color: #6FA3FF !important;
+}
+
+table a:hover {
+    color: #FFFFFF !important;
+}
+
+/* Buttons remain readable */
+button,
+input[type="submit"],
+input[type="button"] {
+    color: #FFFFFF !important;
+}
+
+
+/* =========================================================
+   SARTIFY DARK THEME — FINAL PAGE-SPECIFIC TEXT FIX
+   ========================================================= */
+
+/* =========================
+   MY ORDERS
+   ========================= */
+
+.orders-card .date,
+.orders-card .food,
+.orders-card .side,
+.orders-card .quantity,
+.orders-card .status,
+.orders-card td,
+.orders-card td span {
+    color: #FFFFFF !important;
+}
+
+.orders-card .date {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+}
+
+.orders-card .food {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+}
+
+.orders-card .side {
+    color: #D0D0D0 !important;
+}
+
+.orders-card .quantity {
+    color: #FFFFFF !important;
+}
+
+.orders-card .status {
+    color: #FFFFFF !important;
+    background: #4285F4 !important;
+}
+
+.orders-card tbody tr {
+    background: #303030 !important;
+}
+
+.orders-card tbody tr:hover {
+    background: #383838 !important;
+}
+
+.orders-card thead th {
+    background: #242424 !important;
+    color: #FFFFFF !important;
+}
+
+.orders-card tbody td {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+    border-top-color: #444444 !important;
+}
+
+
+/* =========================
+   ADMIN USERS
+   ========================= */
+
+.users-card {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+}
+
+.users-card .card-header,
+.users-card .card-header h2,
+.users-card .card-header p {
+    color: #FFFFFF !important;
+}
+
+.users-card table,
+.users-card thead,
+.users-card tbody,
+.users-card tr,
+.users-card td,
+.users-card th {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+}
+
+.users-card th {
+    background: #242424 !important;
+    color: #FFFFFF !important;
+}
+
+.users-card td {
+    color: #FFFFFF !important;
+}
+
+.users-card .username {
+    color: #FFFFFF !important;
+}
+
+.users-card .email {
+    color: #C8C8C8 !important;
+}
+
+.users-card .avatar {
+    color: #FFFFFF !important;
+    background: #4285F4 !important;
+}
+
+.users-card .badge {
+    color: #FFFFFF !important;
+}
+
+.users-card .badge-admin,
+.users-card .badge-user {
+    color: #FFFFFF !important;
+}
+
+.users-card .actions a,
+.users-card .action-btn {
+    color: #FFFFFF !important;
+    background: #242424 !important;
+}
+
+.users-card .actions a:hover,
+.users-card .action-btn:hover {
+    color: #FFFFFF !important;
+    background: #4285F4 !important;
+}
+
+.users-card tbody tr:hover {
+    background: #383838 !important;
+}
+
+.users-card tbody tr:hover td {
+    background: #383838 !important;
+    color: #FFFFFF !important;
+}
+
+
+/* =========================
+   ADMIN ORDERS
+   ========================= */
+
+.orders-card .card-header h2,
+.orders-card .card-header p {
+    color: #FFFFFF !important;
+}
+
+.orders-card .username {
+    color: #FFFFFF !important;
+}
+
+.orders-card .meal-list,
+.orders-card .meal,
+.orders-card .empty {
+    color: #FFFFFF !important;
+}
+
+.orders-card .meal {
+    background: #444444 !important;
+}
+
+.orders-card .meal.cancelled {
+    color: #FF8A8A !important;
+}
+
+.orders-card table,
+.orders-card thead,
+.orders-card tbody,
+.orders-card tr,
+.orders-card th,
+.orders-card td {
+    color: #FFFFFF !important;
+}
+
+.orders-card th {
+    background: #242424 !important;
+}
+
+.orders-card td {
+    background: #303030 !important;
+}
+
+.orders-card tbody tr:hover td {
+    background: #383838 !important;
+    color: #FFFFFF !important;
+}
+
+
+/* =========================
+   ADMIN QUICK ACCESS
+   ========================= */
+
+.quick-access {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+}
+
+.quick-access h2,
+.quick-access h3,
+.quick-access h4,
+.quick-access p,
+.quick-access span {
+    color: #FFFFFF !important;
+}
+
+.quick-access a,
+.quick-access a *,
+.quick-access button {
+    color: #FFFFFF !important;
+    background: #242424 !important;
+}
+
+.quick-access a:hover,
+.quick-access a:hover *,
+.quick-access button:hover {
+    color: #FFFFFF !important;
+    background: #4285F4 !important;
+}
+
+
+/* =========================
+   GENERAL DARK TABLE FIX
+   ========================= */
+
+table th {
+    background: #242424 !important;
+    color: #FFFFFF !important;
+}
+
+table td {
+    background: #303030 !important;
+    color: #FFFFFF !important;
+}
+
+table td a {
+    color: #6FA3FF !important;
+}
+
+table td a:hover {
+    color: #FFFFFF !important;
+}
+
+table tbody tr:hover td {
+    background: #383838 !important;
+    color: #FFFFFF !important;
+}
+
+
+/* =========================
+   FORM TEXT
+   ========================= */
+
+label,
+.form-label {
+    color: #FFFFFF !important;
+}
+
+input,
+textarea,
+select {
+    color: #FFFFFF !important;
+    background: #303030 !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #A8A8A8 !important;
+}
+

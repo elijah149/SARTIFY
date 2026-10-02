@@ -9,18 +9,18 @@
 
     <style>
         :root {
-            --green-950: #082014;
-            --green-900: #0d2b1b;
-            --green-800: #155b32;
-            --green-700: #1d7541;
-            --green-600: #258c4d;
-            --green-100: #e7f5eb;
-            --green-50: #f4faf6;
-            --text: #17231c;
-            --muted: #6b776f;
-            --border: #dce6df;
-            --bg: #f5f8f6;
-            --white: #ffffff;
+            --green-950: #000000;
+            --green-900: #000000;
+            --green-800: #303030;
+            --green-700: #4285F4;
+            --green-600: #2F6FDB;
+            --green-100: rgba(66, 133, 244, 0.14);
+            --green-50: #000000;
+            --text: #FFFFFF;
+            --muted: #A8A8A8;
+            --border: #444444;
+            --bg: #000000;
+            --white: #303030;
             --danger: #b42318;
             --danger-bg: #fff1f0;
             --shadow: 0 8px 28px rgba(8, 32, 20, .07);
@@ -64,7 +64,7 @@
             inset: 0 auto 0 0;
             width: 248px;
             background: var(--green-950);
-            color: white;
+            color: #FFFFFF;
             padding: 24px 16px;
             display: flex;
             flex-direction: column;
@@ -83,7 +83,7 @@
 
         .brand-subtitle {
             margin-top: 5px;
-            color: #9eb4a5;
+            color: #A8A8A8;
             font-size: 11px;
             font-weight: 700;
             letter-spacing: .7px;
@@ -102,7 +102,7 @@
             gap: 12px;
             padding: 12px 14px;
             border-radius: 11px;
-            color: #c8d7cd;
+            color: #BDBDBD;
             font-size: 14px;
             font-weight: 600;
             transition: .2s ease;
@@ -111,7 +111,7 @@
         .nav a:hover,
         .nav a.active {
             background: rgba(255,255,255,.09);
-            color: white;
+            color: #FFFFFF;
         }
 
         .nav-icon {
@@ -237,7 +237,7 @@
 
         .day-head {
             background: var(--green-900);
-            color: white;
+            color: #FFFFFF;
             padding: 15px;
         }
 
@@ -358,7 +358,7 @@
             border-radius: 8px;
             padding: 9px 11px;
             background: var(--green-700);
-            color: white;
+            color: #FFFFFF;
             cursor: pointer;
             font-size: 11px;
             font-weight: 800;
@@ -504,7 +504,64 @@
                 transition: none !important;
             }
         }
-    </style>
+    
+        /* SARTIFY: readable form fields and dropdown options */
+        input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+        textarea,
+        select {
+            background-color: #303030 !important;
+            color: #FFFFFF !important;
+            border-color: #555555 !important;
+            color-scheme: dark;
+        }
+
+        select option,
+        select optgroup {
+            background-color: #303030 !important;
+            color: #FFFFFF !important;
+        }
+
+        select option:checked {
+            background-color: #4285F4 !important;
+            color: #FFFFFF !important;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #A8A8A8 !important;
+            opacity: 1;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #4285F4 !important;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.25);
+        }
+
+    
+/* SARTIFY logo */
+.brand {
+    display: flex;
+    align-items: center;
+}
+.sartify-logo {
+    display: block;
+    width: 175px;
+    max-width: 100%;
+    height: 48px;
+    object-fit: contain;
+    object-position: left center;
+}
+@media (max-width: 600px) {
+    .sartify-logo {
+        width: 145px;
+        height: 42px;
+    }
+}
+
+</style>
 </head>
 
 <body>
@@ -512,9 +569,10 @@
 <aside class="sidebar">
 
     <div class="brand">
-        <div class="brand-name">SARTIFY</div>
-        <div class="brand-subtitle">Admin Portal</div>
-    </div>
+    <img src="{% static 'images/sartify-logo-white.png' %}"
+         class="sartify-logo"
+         alt="SARTIFY logo">
+</div>
 
     <nav class="nav">
 

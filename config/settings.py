@@ -1,12 +1,13 @@
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / ".env")
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY") or os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
@@ -25,6 +26,14 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.railway.app",
     "https://*.up.railway.app",
 ]
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    CSRF_TRUSTED_ORIGINS.append(
+        f"https://{RENDER_EXTERNAL_HOSTNAME}"
+    )
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -70,21 +79,29 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("PGDATABASE") or os.environ.get("POSTGRES_DB") or os.environ.get("DB_NAME"),
-        "USER": os.environ.get("PGUSER") or os.environ.get("POSTGRES_USER") or os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("PGPASSWORD") or os.environ.get("POSTGRES_PASSWORD") or os.environ.get("DB_PASSWORD"),
-        "HOST": os.environ.get("PGHOST") or os.environ.get("POSTGRES_HOST") or os.environ.get("DB_HOST"),
-        "PORT": (
-            os.environ.get("PGPORT")
-            or os.environ.get("POSTGRES_PORT")
-            or ("5432" if os.environ.get("PGHOST") or os.environ.get("POSTGRES_HOST") else os.environ.get("DB_PORT") or "5432")
-        ),
-        "OPTIONS": {
-            "sslmode": "require",
-        },
-    }
+    "default": (
+        dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+        if os.environ.get("DATABASE_URL")
+        else {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("PGDATABASE") or os.environ.get("POSTGRES_DB") or os.environ.get("DB_NAME"),
+            "USER": os.environ.get("PGUSER") or os.environ.get("POSTGRES_USER") or os.environ.get("DB_USER"),
+            "PASSWORD": os.environ.get("PGPASSWORD") or os.environ.get("POSTGRES_PASSWORD") or os.environ.get("DB_PASSWORD"),
+            "HOST": os.environ.get("PGHOST") or os.environ.get("POSTGRES_HOST") or os.environ.get("DB_HOST"),
+            "PORT": (
+                os.environ.get("PGPORT")
+                or os.environ.get("POSTGRES_PORT")
+                or os.environ.get("DB_PORT")
+                or "5432"
+            ),
+            "OPTIONS": {
+                "sslmode": "require",
+            },
+        }
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,23 +21,23 @@
     <style>
 
         :root {
-            --primary: #166534;
-            --primary-dark: #14532d;
-            --primary-soft: #eaf6ee;
+            --primary: #4285F4;
+            --primary-dark: #2F6FDB;
+            --primary-soft: rgba(66, 133, 244, 0.14);
 
-            --sidebar: #0d2116;
-            --sidebar-hover: #173d27;
+            --sidebar: #000000;
+            --sidebar-hover: #303030;
 
-            --background: #f5f8f6;
-            --white: #ffffff;
+            --background: #000000;
+            --white: #303030;
 
-            --text: #17251d;
-            --muted: #6b776f;
+            --text: #FFFFFF;
+            --muted: #A8A8A8;
 
-            --border: #e4ebe6;
+            --border: #444444;
 
             --danger: #b91c1c;
-            --danger-soft: #fee2e2;
+            --danger-soft: rgba(255, 92, 92, 0.12);
 
             --shadow: 0 8px 30px rgba(13, 33, 22, 0.06);
         }
@@ -81,7 +82,7 @@
             padding: 25px 16px;
 
             background: var(--sidebar);
-            color: white;
+            color: #FFFFFF;
 
             display: flex;
             flex-direction: column;
@@ -111,7 +112,7 @@
 
             background: var(--primary);
 
-            color: white;
+            color: #FFFFFF;
 
             font-size: 16px;
             font-weight: 800;
@@ -125,13 +126,13 @@
         }
 
         .brand-text span {
-            color: #65a30d;
+            color: #4285F4;
         }
 
         .nav-label {
             padding: 0 12px 9px;
 
-            color: #809087;
+            color: #A8A8A8;
 
             font-size: 10px;
             font-weight: 700;
@@ -156,7 +157,7 @@
 
             border-radius: 9px;
 
-            color: #cbd8cf;
+            color: #BDBDBD;
 
             text-decoration: none;
 
@@ -172,13 +173,13 @@
         .nav a:hover,
         .logout:hover {
             background: var(--sidebar-hover);
-            color: white;
+            color: #FFFFFF;
             transform: translateX(2px);
         }
 
         .nav a.active {
             background: var(--primary);
-            color: white;
+            color: #FFFFFF;
         }
 
         .nav-icon {
@@ -788,7 +789,62 @@
 
         }
 
-    </style>
+    
+        /* SARTIFY: improve navigation and quick-access readability */
+        .sidebar,
+        .sidebar * {
+            color: #FFFFFF;
+        }
+
+        .nav a,
+        .nav a:visited,
+        .logout,
+        .logout a {
+            color: #BDBDBD !important;
+        }
+
+        .nav a:hover,
+        .nav a.active,
+        .nav a:hover *,
+        .nav a.active * {
+            color: #FFFFFF !important;
+        }
+
+        .nav-label,
+        .brand-subtitle,
+        .quick-access p,
+        .quick-access span {
+            color: #A8A8A8 !important;
+        }
+
+        .quick-access a,
+        .quick-access a *,
+        .quick-access button {
+            color: #FFFFFF !important;
+        }
+
+    
+/* SARTIFY logo */
+.brand {
+    display: flex;
+    align-items: center;
+}
+.sartify-logo {
+    display: block;
+    width: 175px;
+    max-width: 100%;
+    height: 48px;
+    object-fit: contain;
+    object-position: left center;
+}
+@media (max-width: 600px) {
+    .sartify-logo {
+        width: 145px;
+        height: 42px;
+    }
+}
+
+</style>
 
 </head>
 
@@ -802,16 +858,10 @@
     <aside class="sidebar">
 
         <div class="brand">
-
-            <div class="brand-mark">
-                S
-            </div>
-
-            <div class="brand-text">
-                SARTI<span>FY</span>
-            </div>
-
-        </div>
+    <img src="{% static 'images/sartify-logo-white.png' %}"
+         class="sartify-logo"
+         alt="SARTIFY logo">
+</div>
 
 
         <div class="nav-label">

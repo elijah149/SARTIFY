@@ -1,231 +1,196 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARTIFY | Login</title>
 
-    <title>SARTIFY | Sign In</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --green-950: #071f13;
-            --green-900: #0b2b19;
-            --green-800: #12552e;
-            --green-700: #176b39;
-            --green-600: #208549;
-            --green-100: #e8f5ec;
-            --green-50: #f4faf6;
-
-            --text: #17231c;
-            --muted: #6b776f;
-            --border: #dce5df;
-            --danger: #b42318;
-            --danger-bg: #fff3f2;
-            --white: #ffffff;
-            --background: #f4f7f5;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        html,
-        body {
-            min-height: 100%;
-        }
-
         body {
             min-height: 100vh;
-            font-family: "Inter", -apple-system, BlinkMacSystemFont,
-                         "Segoe UI", Roboto, Arial, sans-serif;
-            background: var(--background);
-            color: var(--text);
+            font-family: "Inter", sans-serif;
+            background: #000000;
+            color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px 20px;
-            position: relative;
-            overflow-x: hidden;
+            padding: 24px;
         }
 
-        /* BACKGROUND */
-
-        .background-shape {
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .shape-one {
-            width: 420px;
-            height: 420px;
-            background: rgba(32, 133, 73, .06);
-            top: -190px;
-            right: -150px;
-        }
-
-        .shape-two {
-            width: 350px;
-            height: 350px;
-            background: rgba(18, 85, 46, .05);
-            bottom: -180px;
-            left: -140px;
-        }
-
-        /* PAGE */
-
-        .login-container {
+        .login-wrapper {
             width: 100%;
             max-width: 440px;
         }
 
-        /* CARD */
-
-        .login-card {
-            background: var(--white);
-            border: 1px solid #e2e9e4;
-            border-radius: 22px;
-            padding: 42px 40px 32px;
-            box-shadow:
-                0 25px 60px rgba(7, 31, 19, .08),
-                0 4px 12px rgba(7, 31, 19, .03);
-        }
-
-        /* BRAND */
-
         .brand {
-            text-align: center;
-            margin-bottom: 34px;
-        }
-
-        .brand-mark {
-            width: 52px;
-            height: 52px;
-            margin: 0 auto 14px;
-            border-radius: 14px;
-            background: var(--green-900);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: 800;
-            box-shadow: 0 8px 20px rgba(11, 43, 25, .16);
-        }
-
-        .brand-name {
-            color: var(--green-800);
-            font-size: 30px;
-            font-weight: 800;
-            letter-spacing: 2px;
-        }
-
-        .brand-subtitle {
-            margin-top: 5px;
-            color: #89958e;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-        }
-
-        /* HEADING */
-
-        .heading {
             text-align: center;
             margin-bottom: 28px;
         }
 
-        .heading h1 {
-            color: var(--text);
+        .brand img {
+            width: 150px;
+            max-width: 70%;
+            height: auto;
+            display: block;
+            margin: 0 auto 18px;
+            object-fit: contain;
+        }
+
+        .brand h1 {
             font-size: 25px;
-            line-height: 1.2;
-            font-weight: 750;
-            letter-spacing: -.5px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
-        .heading p {
+        .brand p {
             margin-top: 8px;
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.5;
+            color: #a8a8a8;
+            font-size: 14px;
         }
 
-        /* ERROR */
-
-        .error-message {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            background: var(--danger-bg);
-            border: 1px solid #f1cccc;
-            border-radius: 11px;
-            padding: 12px 13px;
-            margin-bottom: 20px;
-            color: var(--danger);
-            font-size: 12px;
-            line-height: 1.5;
-            font-weight: 600;
+        .login-card {
+            background: #303030;
+            border: 1px solid #444444;
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
         }
 
-        .error-icon {
-            flex-shrink: 0;
-            font-weight: 800;
+        .login-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 7px;
         }
 
-        /* FORM */
+        .subtitle {
+            color: #bdbdbd;
+            font-size: 14px;
+            margin-bottom: 26px;
+        }
 
-        .form-group {
+        .field {
             margin-bottom: 19px;
         }
 
-        .form-group label {
+        .field label {
             display: block;
             margin-bottom: 8px;
-            color: #34423a;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .input-container {
-            position: relative;
-        }
-
-        .input-container input {
-            width: 100%;
-            height: 52px;
-            padding: 0 14px;
-            border: 1px solid var(--border);
-            border-radius: 11px;
-            background: #fbfcfb;
-            color: var(--text);
-            font-family: inherit;
             font-size: 13px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .field input {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border-radius: 10px;
+            border: 1px solid #555555;
+            background: #000000;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
             outline: none;
-            transition: border-color .2s ease,
-                        box-shadow .2s ease,
-                        background .2s ease;
+            transition: 0.2s ease;
         }
 
-        .input-container input:focus {
-            border-color: var(--green-600);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(32, 133, 73, .09);
+        .field input::placeholder {
+            color: #777777;
         }
 
-        .input-container input::placeholder {
-            color: #a0aaa4;
+        .field input:focus {
+            border-color: #4285F4;
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.15);
         }
 
-        /* PASSWORD */
+        .error {
+            color: #ff8f8f;
+            font-size: 12px;
+            margin-top: 7px;
+        }
 
-        .password-input {
-            padding-right: 76px !important;
+        .non-field-error {
+            background: rgba(255, 70, 70, 0.1);
+            border: 1px solid rgba(255, 70, 70, 0.35);
+            color: #ffb0b0;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 48px;
+            border: none;
+            border-radius: 10px;
+            background: #4285F4;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .login-btn:hover {
+            background: #5b96f5;
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #777777;
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 18px;
+            }
+
+            .login-card {
+                padding: 24px 20px;
+                border-radius: 15px;
+            }
+
+            .brand h1 {
+                font-size: 22px;
+            }
+
+            .brand img {
+                width: 125px;
+            }
+        }
+    
+        /* =========================
+           SHOW / HIDE PASSWORD
+        ========================= */
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 65px;
         }
 
         .show-password {
@@ -233,300 +198,97 @@
             right: 10px;
             top: 50%;
             transform: translateY(-50%);
-            border: 0;
+            border: none;
             background: transparent;
-            color: var(--green-700);
-            padding: 7px 8px;
+            color: #6FA3FF;
+            font-size: 12px;
+            font-weight: 700;
             cursor: pointer;
-            font-family: inherit;
-            font-size: 11px;
-            font-weight: 800;
+            padding: 5px;
         }
 
         .show-password:hover {
-            color: var(--green-900);
+            color: #FFFFFF;
         }
 
-        /* BUTTON */
-
-        .login-button {
-            width: 100%;
-            height: 52px;
-            margin-top: 5px;
-            border: 0;
-            border-radius: 11px;
-            background: var(--green-700);
-            color: white;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: .1px;
-            cursor: pointer;
-            transition: background .2s ease,
-                        transform .2s ease,
-                        box-shadow .2s ease;
-        }
-
-        .login-button:hover {
-            background: var(--green-800);
-            transform: translateY(-1px);
-            box-shadow: 0 9px 22px rgba(23, 107, 57, .20);
-        }
-
-        .login-button:active {
-            transform: translateY(0);
-        }
-
-        .login-button:focus-visible,
-        .show-password:focus-visible,
-        input:focus-visible {
-            outline: 3px solid rgba(32, 133, 73, .18);
-            outline-offset: 2px;
-        }
-
-        /* FOOTER */
-
-        .footer {
-            margin-top: 27px;
-            padding-top: 20px;
-            border-top: 1px solid #edf1ee;
-            text-align: center;
-        }
-
-        .footer p {
-            color: #9aa49e;
-            font-size: 11px;
-            line-height: 1.5;
-        }
-
-        .footer strong {
-            color: #718078;
-            font-weight: 700;
-        }
-
-        /* RESPONSIVE */
-
-        @media (max-width: 520px) {
-            body {
-                padding: 18px 14px;
-            }
-
-            .login-card {
-                padding: 34px 24px 27px;
-                border-radius: 18px;
-            }
-
-            .brand {
-                margin-bottom: 29px;
-            }
-
-            .brand-mark {
-                width: 48px;
-                height: 48px;
-                border-radius: 13px;
-                font-size: 20px;
-            }
-
-            .brand-name {
-                font-size: 27px;
-            }
-
-            .heading h1 {
-                font-size: 23px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            body {
-                padding: 12px 10px;
-            }
-
-            .login-card {
-                padding: 28px 19px 23px;
-            }
-
-            .brand-name {
-                font-size: 25px;
-            }
-
-            .input-container input,
-            .login-button {
-                height: 50px;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                transition: none !important;
-            }
-        }
     </style>
 </head>
 
 <body>
 
-<div class="background-shape shape-one"></div>
-<div class="background-shape shape-two"></div>
+<div class="login-wrapper">
 
-<main class="login-container">
+    <div class="brand">
+        <img src="{% static 'images/sartify-logo-white.png' %}" alt="SARTIFY Logo">
+    </div>
 
-    <section class="login-card">
+    <div class="login-card">
 
-        <div class="brand">
+        <h2>Welcome back</h2>
+        <p class="subtitle">Sign in to continue to your account.</p>
 
-            <div class="brand-mark">
-                S
+        {% if form.non_field_errors %}
+            <div class="non-field-error">
+                {{ form.non_field_errors }}
             </div>
-
-            <div class="brand-name">
-                SARTIFY
-            </div>
-
-            <div class="brand-subtitle">
-                Food Management System
-            </div>
-
-        </div>
-
-
-        <div class="heading">
-
-            <h1>
-                Welcome Back
-            </h1>
-
-            <p>
-                Sign in to access your SARTIFY account.
-            </p>
-
-        </div>
-
-
-        {% if form.errors %}
-
-        <div class="error-message">
-
-            <span class="error-icon">!</span>
-
-            <span>
-                Invalid username or password.
-                Please check your credentials and try again.
-            </span>
-
-        </div>
-
         {% endif %}
 
-
         <form method="post">
-
             {% csrf_token %}
 
+            <div class="field">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
 
-            <div class="form-group">
-
-                <label for="id_username">
-                    Username
-                </label>
-
-                <div class="input-container">
-
-                    <input
-                        type="text"
-                        name="username"
-                        id="id_username"
-                        placeholder="Enter your username"
-                        autocomplete="username"
-                        autocapitalize="none"
-                        spellcheck="false"
-                        required
-                        autofocus
-                    >
-
-                </div>
-
+                {% for error in form.username.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
             </div>
 
+            <div class="field">
+                <label for="{{ form.password.id_for_label }}">Password</label>
 
-            <div class="form-group">
-
-                <label for="id_password">
-                    Password
-                </label>
-
-                <div class="input-container">
-
-                    <input
-                        type="password"
-                        name="password"
-                        id="id_password"
-                        class="password-input"
-                        placeholder="Enter your password"
-                        autocomplete="current-password"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        class="show-password"
-                        id="togglePassword"
-                        aria-label="Show password"
-                    >
+                <div class="password-wrapper">
+                    {{ form.password }}
+                    <button type="button" class="show-password" id="togglePassword">
                         Show
                     </button>
-
                 </div>
 
+                {% for error in form.password.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
             </div>
 
-
-            <button
-                type="submit"
-                class="login-button"
-            >
+            <button type="submit" class="login-btn">
                 Sign In
             </button>
-
         </form>
 
+    </div>
 
-        <div class="footer">
+    <div class="footer">
+        © 2026 SARTIFY. All rights reserved.
+    </div>
 
-            <p>
-                © 2026 <strong>SARTIFY</strong>.
-                All rights reserved.
-            </p>
-
-        </div>
-
-    </section>
-
-</main>
+</div>
 
 
 <script>
     const passwordInput = document.getElementById("id_password");
     const togglePassword = document.getElementById("togglePassword");
 
-    togglePassword.addEventListener("click", function () {
-
-        const isPassword =
-            passwordInput.type === "password";
-
-        passwordInput.type =
-            isPassword ? "text" : "password";
-
-        togglePassword.textContent =
-            isPassword ? "Hide" : "Show";
-
-        togglePassword.setAttribute(
-            "aria-label",
-            isPassword ? "Hide password" : "Show password"
-        );
-
-    });
+    if (passwordInput && togglePassword) {
+        togglePassword.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                togglePassword.textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                togglePassword.textContent = "Show";
+            }
+        });
+    }
 </script>
 
 </body>
