@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: sartify-food-management
+    runtime: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi --bind 0.0.0.0:$PORT --workers 3
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sartify-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.12.4"
+
+databases:
+  - name: sartify-db
+    databaseName: sartify
+    user: sartify
